@@ -10,6 +10,7 @@ public:
 void setup();
 void update();
 void draw();
+void keyPressed(int key);
 
 float w = 0;
 float h = 0;
