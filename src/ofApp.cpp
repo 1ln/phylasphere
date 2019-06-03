@@ -1,7 +1,7 @@
 #include "ofApp.h"
 
 void ofApp::setup() {
-ofBackground(0);
+ofBackground(185);
 w = ofGetWidth();
 h = ofGetHeight();
 
@@ -35,6 +35,6 @@ if(key == 'a') {
 }
 
 if(key == 'd') {
-}
+} 
 
 }
