@@ -36,9 +36,9 @@ cout << "w pressed" << endl;
 }
 
 if(key == 's') {
-orbiter.setSpeed(.09);
+orbiter.speedDecrease(.01,.09);
 } else {
-orbiter.setSpeed(.18);
+//orbiter.speedIncrease(.05,.18);
 } 
 
 if(key == 'a') {
@@ -47,4 +47,10 @@ if(key == 'a') {
 if(key == 'd') {
 } 
 
+}
+
+void ofApp::keyReleased(int key) {
+if(key == 's') {
+orbiter.speedIncrease(.01,.18);
+}
 }

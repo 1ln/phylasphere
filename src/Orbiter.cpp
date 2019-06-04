@@ -16,6 +16,18 @@ void Orbiter::setSpeed(float speed) {
 _speed = speed;
 }
 
+void Orbiter::speedDecrease(float inc,float lim) {
+    if(_speed >= lim) {
+    _speed -= inc;
+    } 
+}
+
+void Orbiter::speedIncrease(float inc,float lim) {
+    if(_speed <= lim) {
+    _speed += inc;
+    }
+}
+
 void Orbiter::setRadius(float radius) { 
 _radius = radius;
 }

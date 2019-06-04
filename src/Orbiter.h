@@ -11,6 +11,8 @@ Orbiter();
 float getRadius();
 void setRadius(float radius);
 void setSpeed(float speed);
+void speedIncrease(float inc,float lim);
+void speedDecrease(float inc,float lim);
 void setPosition(float x,float y);
 
 void setup();
