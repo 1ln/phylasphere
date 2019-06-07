@@ -32,13 +32,12 @@ void ofApp::keyPressed(int key) {
 
 //wsad keys
 if(key == 'w') {
-cout << "w pressed" << endl;
+//cout << "w pressed" << endl;
 }
 
 if(key == 's') {
-orbiter.speedDecrease(.01,.09);
+orbiter.thrusters(.03);
 } else {
-//orbiter.speedIncrease(.05,.18);
 } 
 
 if(key == 'a') {
@@ -50,7 +49,4 @@ if(key == 'd') {
 }
 
 void ofApp::keyReleased(int key) {
-if(key == 's') {
-orbiter.speedIncrease(.01,.18);
-}
 }

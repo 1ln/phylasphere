@@ -4,7 +4,7 @@ Orbiter::Orbiter() {
 _x = 0;
 _y = 0;
 _radius = 5;
-_speed = .18;
+_speed = 0;
 } 
 
 void Orbiter::setPosition(float x,float y) {
@@ -16,16 +16,8 @@ void Orbiter::setSpeed(float speed) {
 _speed = speed;
 }
 
-void Orbiter::speedDecrease(float inc,float lim) {
-    if(_speed >= lim) {
+void Orbiter::thrusters(float inc) {
     _speed -= inc;
-    } 
-}
-
-void Orbiter::speedIncrease(float inc,float lim) {
-    if(_speed <= lim) {
-    _speed += inc;
-    }
 }
 
 void Orbiter::setRadius(float radius) { 
@@ -43,10 +35,11 @@ void Orbiter::setup(){
 void Orbiter::draw() {
 ofPushMatrix();
 ofTranslate(ofGetWidth()/2,ofGetHeight()/2);
-ofRotateZRad(ofGetElapsedTimef() * _speed);
+ofRotateZRad(_speed);
 ofDrawCircle(_x,_y,_radius);
 ofPopMatrix();
 }
 
 void Orbiter::update() {
+_speed += ofGetLastFrameTime() * .18;
 }
