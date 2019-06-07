@@ -1,12 +1,12 @@
 #include "Planet.h"
 
 Planet::Planet() {
-_step = (2*PI)/100;
-_px = 250;
-_py = 250;
+_step = 0;
+_px = 0;
+_py = 0;
 _x = 0;
 _y = 0;
-_radius = 45;
+_radius = 0;
 _new_radius = 0;
 _radius_offset = 0;
 } 
