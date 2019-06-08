@@ -6,7 +6,8 @@ ofBackground(185);
 w = ofGetWidth();
 h = ofGetHeight();
 
-orbiter.setPosition(w/8,h/4+(h/8));
+orbiter.setPosition(w/2,h/8);
+orbiter.setRotationalCenter(w/2,h/2);
 orbiter.setRadius(15);
 orbiter.setup();
 
@@ -25,7 +26,7 @@ orbiter.update();
 
 void ofApp::draw(){
 planet.draw();
-orbiter.draw();
+//orbiter.draw();
 }
 
 void ofApp::keyPressed(int key) {

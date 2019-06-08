@@ -13,6 +13,7 @@ void setRadius(float radius);
 void setSpeed(float speed);
 void thrusters(float inc);
 void setPosition(float x,float y);
+void setRotationalCenter(float cx, float cy);
 
 void setup();
 void update();
@@ -22,6 +23,9 @@ private:
 
 float _speed;
 float _radius;
+float _orbital_radius;
+float _cx;
+float _cy;
 float _x;
 float _y;
 

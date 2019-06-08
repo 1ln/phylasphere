@@ -59,7 +59,7 @@ _new_radius = _radius;
 void Planet::draw() {
 drawPlanet();
 ofSetColor(255,0,0,255);
-ofDrawLine(_px+(vradius[2]+25)*cos(vtheta[2]),_py-(vradius[2]+25)*sin(vtheta[2]),vx[2],vy[2]);
+ofDrawLine(_px+(vradius[2]+45)*cos(vtheta[2]),_py-(vradius[2]+45)*sin(vtheta[2]),vx[2],vy[2]);
 }
 
 void Planet::update() {
