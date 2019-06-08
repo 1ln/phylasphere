@@ -19,6 +19,10 @@ void draw();
 
 ofPath path;
 
+vector <float> vx;
+vector <float> vy;
+vector <float> vtheta;
+
 private:
 
 float _step;
