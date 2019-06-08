@@ -8,6 +8,8 @@ class Planet {
 public:
 Planet();
 
+void drawPlanet();
+void generatePoints();
 void setRadius(float radius);
 void setAmountOffset(float offset);
 void setSteps(float step);
@@ -22,6 +24,7 @@ ofPath path;
 vector <float> vx;
 vector <float> vy;
 vector <float> vtheta;
+vector <float> vradius;
 
 private:
 
