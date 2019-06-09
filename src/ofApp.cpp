@@ -6,48 +6,36 @@ ofBackground(185);
 w = ofGetWidth();
 h = ofGetHeight();
 
-orbiter.setPosition(w/2,h/8);
-orbiter.setRotationalCenter(w/2,h/2);
-orbiter.setRadius(15);
-orbiter.setup();
-
-planet.setPosition(w/2,h/2);
+cam.setPosition(ofVec3f(0,0,945));
+cam.lookAt(ofVec3f(0,0,0));
+cam.orbitDeg(0,45,945,ofVec3f(0,0,0));
 planet.setRadius(115);
 planet.setAmountOffset(25);
 planet.setSteps(25);
+planet.setHeight(10); 
 planet.setup();
  
 }
 
 void ofApp::update() {
 planet.update();
-orbiter.update();
 }
 
-void ofApp::draw(){
+void ofApp::draw() { 
+cam.begin();
+//ofDrawBox(0,0,0,100,100,100);
 planet.draw();
-//orbiter.draw();
+cam.end();
 }
 
 void ofApp::keyPressed(int key) {
 
-//wsad keys
+//w key
 if(key == 'w') {
 //cout << "w pressed" << endl;
 }
 
-if(key == 's') {
-orbiter.thrusters(.03);
-} else {
 } 
-
-if(key == 'a') {
-}
-
-if(key == 'd') {
-} 
-
-}
 
 void ofApp::keyReleased(int key) {
 }

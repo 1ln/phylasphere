@@ -2,7 +2,6 @@
 #include "ofMain.h"
 
 #include "Planet.h"
-#include "Orbiter.h"
 
 class ofApp : public ofBaseApp {
 
@@ -17,8 +16,8 @@ void keyReleased(int key);
 float w = 0;
 float h = 0;
 
+ofCamera cam;
 Planet planet;
-Orbiter orbiter;
 
 private:
 

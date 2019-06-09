@@ -13,13 +13,14 @@ void generatePoints();
 void setRadius(float radius);
 void setAmountOffset(float offset);
 void setSteps(float step);
+void setHeight(float height);
 void setPosition(float px,float py);
 
 void setup();
 void update();
 void draw();
 
-ofPath path;
+of3dPrimitive plateau;
 
 vector <float> vx;
 vector <float> vy;
@@ -36,6 +37,7 @@ float _px;
 float _py;
 float _x;
 float _y;
+float _height;
 
 };
 
