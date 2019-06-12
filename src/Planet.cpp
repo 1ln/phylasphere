@@ -34,13 +34,15 @@ _radius_offset = offset;
 }
 
 void Planet::setup() {
-plateau.getMesh().setMode(OF_PRIMITIVE_LINE_LOOP);
+plateau.getMesh().setMode(OF_PRIMITIVE_TRIANGLE_FAN);
 generatePoints();
 }
  
 void Planet::drawPlanet() {
 //ofBeginShape();
 //for(unsigned int i = 0; i <= plateau.getMesh().numOfVertices; i++) {
+
+//}
     plateau.draw();
 //}
 //ofEndShape();
@@ -58,16 +60,21 @@ _new_radius = _radius;
         vtheta.push_back(theta);
         vradius.push_back(_new_radius);
         plateau.getMesh().addVertex(ofVec3f(_x,_y,0));
-        //plateau.getMesh().addVertex(ofVec3f(_x,_y,_height));
+        //plateau.getMesh().addVertex(ofVec3f(,_y,_height));
         }
-        for(unsigned int i = 0; i < plateau.getMesh().getNumVertices()/3; ++i) {
-        plateau.getMesh().setColor(i,ofColor(255,255,255));
-     }
+        //if(plateau.getMesh().getNumVertices() < 50) {
+        for(unsigned int i = 0; i < 25; ++i) {
+        //ofSetColor(0,255,0,255);
+        plateau.getMesh().addVertex(ofVec3f(vx[i],vy[i],_height));
+        //plateau.setColor(i,ofColor(0,255,0,255));
+        }  
 }
 
-void Planet::draw() {
+void Planet::draw() { 
 drawPlanet();
-ofSetColor(255,0,0,255);
+//ofNoFill();
+cout << plateau.getMesh().getNumVertices() << endl; 
+//ofSetColor(255,0,0,255);
 //ofDrawLine(_px+(vradius[2]+45)*cos(vtheta[2]),_py-(vradius[2]+45)*sin(vtheta[2]),vx[2],vy[2]);
 }
 

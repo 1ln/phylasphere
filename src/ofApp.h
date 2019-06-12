@@ -19,6 +19,8 @@ float h = 0;
 ofCamera cam;
 Planet planet;
 
+ofLight light;
+
 private:
 
 };
