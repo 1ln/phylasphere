@@ -9,25 +9,25 @@ h = ofGetHeight();
 cam.setPosition(ofVec3f(0,0,945));
 cam.lookAt(ofVec3f(0,0,0));
 cam.orbitDeg(0,45,945,ofVec3f(0,0,0));
-planet.setRadius(115);
-planet.setAmountOffset(25);
-planet.setSteps(25);
-planet.setHeight(45); 
-planet.setup();
+plateau.setRadius(115);
+plateau.setAmountOffset(25);
+plateau.setSteps(5);
+plateau.setHeight(45); 
+plateau.setup();
 
 light.setPointLight();
 light.setPosition(ofVec3f(-100,100,100));
 }
 
 void ofApp::update() {
-planet.update();
+plateau.update();
 }
 
 void ofApp::draw() { 
 cam.begin();
 light.enable();
 //ofDrawBox(0,0,0,100,100,100);
-planet.draw();
+plateau.draw();
 cam.end();
 }
 
