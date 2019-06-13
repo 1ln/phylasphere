@@ -1,6 +1,7 @@
 #pragma once
 #include "ofMain.h"
 
+#include "Player.h" 
 #include "Plateau.h"
 
 class ofApp : public ofBaseApp {
@@ -17,6 +18,7 @@ float w = 0;
 float h = 0;
 
 ofCamera cam;
+Player player;
 Plateau plateau;
 
 ofLight light;
