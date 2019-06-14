@@ -11,6 +11,9 @@ Player();
 void drawPlayer();
 void setRadius(float radius);
 void setPosition(float x,float y);
+ofVec3f getPosition();
+float getX();
+float getY();
  
 void back(); 
 void forward();
@@ -21,14 +24,15 @@ void setup();
 void update();
 void draw();
 
-ofBoxPrimitive ico;
-//ofIcoSpherePrimitive ico;
+ofBoxPrimitive player;
+//ofIcoSpherePrimitive player;
  
 private:
 
 float _radius;
 float _x;
 float _y;
+float _speed;
 
 };
 
