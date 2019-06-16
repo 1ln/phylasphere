@@ -6,28 +6,27 @@ ofBackground(185);
 w = ofGetWidth();
 h = ofGetHeight();
 
-cam.setPosition(ofVec3f(0,0,945));
+cam.setPosition(ofVec3f(player.getX(),player.getY(),945));
 //cam.lookAt(ofVec3f(0,0,0));
 cam.lookAt(player.getPosition());
 cam.orbitDeg(0,45,945,ofVec3f(0,0,0));
 cam.enableOrtho();
 
 player.setRadius(10);
-player.setPosition(0,0);
+player.setPosition(w/2,h/2);
  
-plateau.setRadius(115);
-plateau.setAmountOffset(25);
-plateau.setSteps(5);
-plateau.setHeight(45); 
-plateau.setup();
+//plateau.setPosition(250,250);
+//plateau.setHeight(45); 
+//plateau.setup();
 cam.setParent(player.player);
-
+light.setAmbientColor(ofColor(255,255,255));
 light.setParent(player.player);
 light.setPosition(player.getX(),player.getY(),1500);
+world.setup();
 }
 
 void ofApp::update() {
-plateau.update();
+//plateau.update();
 //cam.lookAt(player.getPosition());
 }
 
@@ -35,8 +34,8 @@ void ofApp::draw() {
 cam.begin();
 light.enable();
 player.draw();
-ofDrawBox (200,250,0,25,25,100);
-//plateau.draw();
+world.draw();
+//ofDrawBox (200,250,0,25,25,100);
 cam.end();
 }
 

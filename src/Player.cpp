@@ -43,7 +43,7 @@ void Player::drawPlayer() {
 void Player::draw() { 
 drawPlayer();
 //ofNoFill();
-ofSetColor(0,255,0,255);
+//ofSetColor(0,255,0,255);
 }
 
 void Player::update() {
