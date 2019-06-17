@@ -9,7 +9,7 @@ class World {
 public:
 World();
  
-//Plateau plateau;
+ofPlanePrimitive world;
 
 void draw(); 
 void update();
@@ -24,6 +24,8 @@ int _tiles;
 float _w;
 float _h;
 float _height;
+float _n;
+float _scale;
 vector <Plateau> tile;
 float _buffer;
 string _type;

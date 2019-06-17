@@ -31,7 +31,7 @@ _radius = radius;
 void Player::setup() {
 //player.setRadius(_radius);
 //player.setResolution(5);
-player.set(5,5,5);
+player.set(16,16,16);
 player.setPosition(_x,_y,0);
 } 
  
@@ -43,7 +43,7 @@ void Player::drawPlayer() {
 void Player::draw() { 
 drawPlayer();
 //ofNoFill();
-//ofSetColor(0,255,0,255);
+ofSetColor(255,0,0,255);
 }
 
 void Player::update() {
@@ -59,7 +59,7 @@ void Player::back() {
 }
 
 void Player::rotateLeft() {
-player.rotateDeg(-10,0,0,1);
+player.rotateDeg(-45,0,0,1);
 }
 
 void Player::rotateRight() {

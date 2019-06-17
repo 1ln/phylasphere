@@ -20,7 +20,6 @@ float h = 0;
 
 ofCamera cam;
 Player player;
-//Plateau plateau;
 World world;
 
 ofLight light;

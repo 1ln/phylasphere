@@ -3,7 +3,7 @@
 Plateau::Plateau(float x,float y,float h,string type) {
 _x = x;
 _y = y;
-_r = 100;
+_r = 16;
 _h = h;
 _type = type;
 } 
@@ -20,7 +20,7 @@ _h = h;
 void Plateau::setup() {
 c = ofRandom(0,1) *100;
 plateau.set(_r,_r,_h);
-plateau.setPosition(_x,_y,0);
+plateau.setPosition(_x,_y,_h/2);
 } 
  
 void Plateau::drawPlateau() {
