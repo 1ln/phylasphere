@@ -30,12 +30,12 @@ _height = 0;
 }
 //_height = ofRandom(0,1);
 //_height = 0;
-cout << _height << endl;
+//cout << _height << endl;
 return _height;
 }
 
 void World::setup() {
-world.setPosition((_w/2),(_h/2),0);
+world_plane.setPosition(ofVec3f(0,0,0));
 form();
 
 for(int i = 0; i < tile.size(); ++i) {
@@ -43,6 +43,13 @@ tile[i].setup();
 }
 }
 
+void World::rotateLeft() {
+world_plane.rotateDeg(-45,0,0,1);
+}
+
+void World::rotateRight() {
+world_plane.rotateDeg(45,0,0,1);
+}
 
 void World::draw() {
 //cout << tile.size() << endl;

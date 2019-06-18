@@ -6,7 +6,13 @@ _y = y;
 _r = 16;
 _h = h;
 _type = type;
-} 
+}
+
+void Plateau::solidColor(float r,float g,float b) {
+for(int i = 0; i < 6; ++i) { 
+plateau.setSideColor(i,ofColor(r,g,b));
+}
+}
 
 void Plateau::setPosition(float x,float y) {
 _x = x;
@@ -24,7 +30,8 @@ plateau.setPosition(_x,_y,_h/2);
 } 
  
 void Plateau::drawPlateau() {
-    plateau.draw(); 
+    plateau.draw();
+    solidColor(0,c,0);
 }
 
 
@@ -32,7 +39,7 @@ void Plateau::draw() {
 drawPlateau();
 //ofNoFill();
 //cout << plateau.getMesh().getNumVertices() << endl; 
-ofSetColor(0,c,0,255);
+//ofSetColor(0,c,0,255);
 }
 
 void Plateau::update() {

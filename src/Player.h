@@ -17,8 +17,8 @@ float getY();
  
 void back(); 
 void forward();
-void rotateLeft();
-void rotateRight();
+void left(); 
+void right();
 
 void setup();
 void update();

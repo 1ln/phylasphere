@@ -18,11 +18,12 @@ void keyReleased(int key);
 float w = 0;
 float h = 0;
 
-ofCamera cam;
+ofEasyCam cam;
 Player player;
 World world;
 
 ofLight light;
+ofLight light2;
 
 private:
 

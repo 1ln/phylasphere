@@ -6,39 +6,37 @@ ofBackground(185);
 w = ofGetWidth();
 h = ofGetHeight();
 
-cam.setPosition(ofVec3f(w/2,h/2,945));
-cam.lookAt(ofVec3f(w/2,h/2,0));
+cam.setPosition(ofVec3f(w/2,h/2,245));
+cam.lookAt(ofVec3f(w/2,h/2,100));
 //cam.lookAt(player.getPosition());
-cam.orbitDeg(0,45,945,ofVec3f(0,0,0));
-//cam.rotate(45);
+cam.orbitDeg(0,45,245,ofVec3f(0,0,0));
 cam.enableOrtho();
-//cam.rotateDeg(45);
 
 //player.setRadius(10);
-player.setPosition(0,0);
+//player.setPosition(0,0);
  
-//plateau.setPosition(250,250);
-//plateau.setHeight(45); 
-//plateau.setup();
-cam.setParent(player.player);
+cam.setParent(world.world_plane);
 light.setAmbientColor(ofColor(255,255,255));
-//light.setParent(player.player);
-light.setPosition(player.getX(),player.getY(),2500);
-player.rotateLeft();
+//light2.setAmbientColor(ofColor(255,255,255));
+//light.setParent(world.world_plane);
+light.setPosition(0,0,1000);
+//light2.setPosition(128,128,1500);
+world.rotateLeft();
 world.setup();
 }
 
 void ofApp::update() {
-//plateau.update();
 //cam.lookAt(ofVec3f(w/2,h/2,0));
 }
 
-void ofApp::draw() { 
+void ofApp::draw() {
+ofEnableDepthTest();
 cam.begin();
 light.enable();
-player.draw();
+//light2.enable();
+//player.draw();
 world.draw();
-ofDrawBox (0,0,8,16,16,16);
+//ofDrawBox (0,0,8,16,16,16);
 cam.end();
 }
 
@@ -56,9 +54,13 @@ if(key == 'd') {
 //player.rotateRight();
 }
 
-if(key == 'OF_KEY_LEFT') {
+if(key == OF_KEY_LEFT) {
+//cout << "rotate left" << endl;
+world.rotateLeft();
 }
-if(key == 'OF_KEY_RIGHT') {
+
+if(key == OF_KEY_RIGHT) {
+world.rotateRight();
 }
 
 } 

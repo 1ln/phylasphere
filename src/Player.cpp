@@ -41,9 +41,9 @@ void Player::drawPlayer() {
 }
 
 void Player::draw() { 
-drawPlayer();
+//drawPlayer();
 //ofNoFill();
-ofSetColor(255,0,0,255);
+//ofSetColor(255,0,0,255);
 }
 
 void Player::update() {
@@ -51,19 +51,19 @@ void Player::update() {
 }
 
 void Player::forward() {
-player.move(player.getYAxis()*_speed);
+//player.move(player.getYAxis()*_speed);
 }
 
 void Player::back() {
 //_y--;
 }
 
-void Player::rotateLeft() {
-player.rotateDeg(-45,0,0,1);
+void Player::left() {
+//player.rotateDeg(-45,0,0,1);
 }
 
-void Player::rotateRight() {
-player.rotateDeg(10,0,0,1);
+void Player::right() {
+//player.rotateDeg(10,0,0,1);
 }
 
 

@@ -9,13 +9,15 @@ class World {
 public:
 World();
  
-ofPlanePrimitive world;
+ofPlanePrimitive world_plane;
 
 void draw(); 
 void update();
 void setup();
 
 void form();
+void rotateLeft();
+void rotateRight();
 float tileHeight(float i,float j);
 
 private:
