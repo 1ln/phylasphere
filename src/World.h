@@ -2,6 +2,7 @@
 #define _World
 
 #include "ofMain.h"
+#include "geology.h"
 #include "Plateau.h"
 
 class World {
@@ -18,19 +19,19 @@ void setup();
 void form();
 void rotateLeft();
 void rotateRight();
-float tileHeight(float i,float j);
+Formations tileType(float i,float j);
 
 private:
 
-int _tiles;
+int _tile_size;
+int _buffer;
 float _w;
 float _h;
 float _height;
 float _n;
 float _scale;
 vector <Plateau> tile;
-float _buffer;
-string _type;
+//string _type;
 
 };
 

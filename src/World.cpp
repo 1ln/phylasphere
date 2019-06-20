@@ -3,42 +3,40 @@
 World::World() {
 _w = ofGetWidth();
 _h = ofGetHeight();
-_tiles = 450;
 _height = 0;
-_type = "";
-_scale = 0.00563;
+_buffer = 16;
+_tile_size = 8;
+//_type = "";
+_scale = 0.001;
 } 
 
 void World::form() {
-for(int i = -128; i <= 128; i+=16) {
-    for(int j = -128; j <= 128; j+=16) {
-    tile.push_back(Plateau(i,j,tileHeight(i,j),_type));
+for(int i = -_buffer+(-_w); i <= _buffer+_w; i+=_tile_size) {
+    for(int j = -_buffer+(-_h) ; j <= _buffer+_h; j+=_tile_size) {
+    tile.push_back(Plateau(i,j,tileType(i,j)));
     }
 }
 
 } 
 
-float World::tileHeight(float i,float j) {
+Formations World::tileType(float i,float j) {
 _n = ofNoise(i*_scale,j*_scale);
 
-if(_n < 0.20) {
-_height = 55;
-} else if (_n < 0.40) {
-_height = 25;
+if(_n < 0.10) {
+return HILLY;
+} else if (_n < 0.25) {
+return POOLS;
 } else {
-_height = 0;
+return JAGGED;
 }
-//_height = ofRandom(0,1);
-//_height = 0;
-//cout << _height << endl;
-return _height;
 }
 
 void World::setup() {
-world_plane.setPosition(ofVec3f(0,0,0));
+//world_plane.setPosition(ofVec3f(0,0,0));
 form();
 
 for(int i = 0; i < tile.size(); ++i) {
+tile[i].setSize(_tile_size);
 tile[i].setup();
 }
 }

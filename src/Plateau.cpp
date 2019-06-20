@@ -1,14 +1,35 @@
 #include "Plateau.h"
 
-Plateau::Plateau(float x,float y,float h,string type) {
+Plateau::Plateau(float x,float y,Formations form) {
 _x = x;
 _y = y;
-_r = 16;
-_h = h;
-_type = type;
+_xn = 0;
+_yn = 0;
+_scl = 100;
+_n = 0;
+_s = 16;
+_h = 0;
+_form = form;
 }
 
-void Plateau::solidColor(float r,float g,float b) {
+void Plateau::formations() {
+if (_form == HILLY) {
+_h = heightNoise(_x,_y);
+} else if(_form == JAGGED) {
+_h = ofRandom(0,1)*100;
+} else if(_form == POOLS) {
+_h = 0;
+}
+}
+
+float Plateau::heightNoise(float xn,float yn) {
+_xn = xn;
+_yn = yn;
+_n = ofNoise(_xn * _scl,_yn * _scl);
+return _n;
+}
+
+void Plateau::setColor(float r,float g,float b) {
 for(int i = 0; i < 6; ++i) { 
 plateau.setSideColor(i,ofColor(r,g,b));
 }
@@ -21,19 +42,23 @@ _y = y;
 
 void Plateau::setHeight(float h) {
 _h = h;
-} 
+}
+
+void Plateau::setSize(float s) {
+_s = s;
+}
 
 void Plateau::setup() {
-c = ofRandom(0,1) *100;
-plateau.set(_r,_r,_h);
+//c = ofRandom(0,1) *100;
+formations();
+plateau.set(_s,_s,_h);
 plateau.setPosition(_x,_y,_h/2);
 } 
  
 void Plateau::drawPlateau() {
     plateau.draw();
-    solidColor(0,c,0);
+    setColor(10,10,10);
 }
-
 
 void Plateau::draw() { 
 drawPlateau();
