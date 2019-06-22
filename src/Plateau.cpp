@@ -1,32 +1,10 @@
 #include "Plateau.h"
 
-Plateau::Plateau(float x,float y,Formations form) {
+Plateau::Plateau(float x,float y,float h,ofColor c) {
 _x = x;
 _y = y;
-_xn = 0;
-_yn = 0;
-_scl = 100;
-_n = 0;
 _s = 16;
-_h = 0;
-_form = form;
-}
-
-void Plateau::formations() {
-if (_form == HILLY) {
-_h = heightNoise(_x,_y);
-} else if(_form == JAGGED) {
-_h = ofRandom(0,1)*100;
-} else if(_form == POOLS) {
-_h = 0;
-}
-}
-
-float Plateau::heightNoise(float xn,float yn) {
-_xn = xn;
-_yn = yn;
-_n = ofNoise(_xn * _scl,_yn * _scl);
-return _n;
+_h = h;
 }
 
 void Plateau::setColor(float r,float g,float b) {
@@ -49,15 +27,14 @@ _s = s;
 }
 
 void Plateau::setup() {
-//c = ofRandom(0,1) *100;
-formations();
+c = ofRandom(0,1) *100;
 plateau.set(_s,_s,_h);
 plateau.setPosition(_x,_y,_h/2);
 } 
  
 void Plateau::drawPlateau() {
     plateau.draw();
-    setColor(10,10,10);
+    setColor(0,c,0);
 }
 
 void Plateau::draw() { 

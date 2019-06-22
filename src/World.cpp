@@ -13,21 +13,21 @@ _scale = 0.001;
 void World::form() {
 for(int i = -_buffer+(-_w); i <= _buffer+_w; i+=_tile_size) {
     for(int j = -_buffer+(-_h) ; j <= _buffer+_h; j+=_tile_size) {
-    tile.push_back(Plateau(i,j,tileType(i,j)));
+    tileType(i,j,0.001);
+    //_height = 100;
+    tile.push_back(Plateau(i,j,_height,ofColor(0,0,0)));
     }
 }
 
 } 
 
-Formations World::tileType(float i,float j) {
+void World::tileType(float i,float j,float scale) {
 _n = ofNoise(i*_scale,j*_scale);
-
-if(_n < 0.10) {
-return HILLY;
-} else if (_n < 0.25) {
-return POOLS;
+//_scale = scale;
+if(_n < 0.25) {
+_height = 0;
 } else {
-return JAGGED;
+_height = _n * 100;
 }
 }
 
