@@ -28,6 +28,7 @@ float _w;
 float _h;
 float _height;
 float _n;
+ofColor _c;
 float _scale;
 vector <Plateau> tile;
 //string _type;

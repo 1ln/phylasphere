@@ -15,7 +15,7 @@ for(int i = -_buffer+(-_w); i <= _buffer+_w; i+=_tile_size) {
     for(int j = -_buffer+(-_h) ; j <= _buffer+_h; j+=_tile_size) {
     tileType(i,j,0.001);
     //_height = 100;
-    tile.push_back(Plateau(i,j,_height,ofColor(0,0,0)));
+    tile.push_back(Plateau(i,j,_height,_c));
     }
 }
 
@@ -23,11 +23,13 @@ for(int i = -_buffer+(-_w); i <= _buffer+_w; i+=_tile_size) {
 
 void World::tileType(float i,float j,float scale) {
 _n = ofNoise(i*_scale,j*_scale);
-//_scale = scale;
+_scale = scale;
 if(_n < 0.25) {
 _height = 0;
+_c.set(0,0,100,45);
 } else {
-_height = _n * 100;
+_c.set(0,_n*255,0);
+_height = _n * 100 ;
 }
 }
 

@@ -9,7 +9,7 @@ public:
 Plateau(float x,float y,float h,ofColor c);
  
 void drawPlateau();
-void setColor(float r,float g,float b);
+void setColor();
 void setHeight(float h);
 void setSize(float s);
 void setPosition(float x,float y);
@@ -26,7 +26,7 @@ float _s;
 float _x;
 float _y;
 float _h;
-float c;
+ofColor _c;
 };
 
 #endif

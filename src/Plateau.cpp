@@ -5,11 +5,12 @@ _x = x;
 _y = y;
 _s = 16;
 _h = h;
+_c = c;
 }
 
-void Plateau::setColor(float r,float g,float b) {
+void Plateau::setColor() {
 for(int i = 0; i < 6; ++i) { 
-plateau.setSideColor(i,ofColor(r,g,b));
+plateau.setSideColor(i,_c);
 }
 }
 
@@ -27,14 +28,14 @@ _s = s;
 }
 
 void Plateau::setup() {
-c = ofRandom(0,1) *100;
+//c = ofRandom(0,1) *100;
 plateau.set(_s,_s,_h);
-plateau.setPosition(_x,_y,_h/2);
+plateau.setPosition(_x,_y,0);
 } 
  
 void Plateau::drawPlateau() {
     plateau.draw();
-    setColor(0,c,0);
+    setColor();
 }
 
 void Plateau::draw() { 

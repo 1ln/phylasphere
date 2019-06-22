@@ -16,7 +16,7 @@ cam.enableOrtho();
 //player.setPosition(0,0);
  
 cam.setParent(world.world_plane);
-light.setAmbientColor(ofColor(255,255,255));
+//light.setAmbientColor(ofColor(255,255,255));
 //light2.setAmbientColor(ofColor(255,255,255));
 //light.setParent(world.world_plane);
 light.setPosition(0,0,1000);
