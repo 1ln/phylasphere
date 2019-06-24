@@ -18,7 +18,7 @@ void setup();
 void form();
 void rotateLeft();
 void rotateRight();
-float octaveNoise(float x,float y,float o,float p,float l);
+float octaveNoise(int n,float x,float y,float p,float l);
 void tileType(float i,float j,float scale);
 
 private:
@@ -31,14 +31,14 @@ float _height;
 float _n;
 float _n1;
 float _n2;
+float _sum;
+float _amp;
+float _freq;
+float _result;
 float _r;
 float _r1;
 float _r2;
-float _result;
-float _total;
-float _total_amp;
-float _freq;
-float _amp;
+float _r3; 
 ofColor _c;
 float _scale;
 vector <Plateau> tile;
