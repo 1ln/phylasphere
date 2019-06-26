@@ -3,6 +3,7 @@
 
 #include "ofMain.h"
 #include "Plateau.h"
+#include "Player.h"
 
 class World {
 
@@ -11,6 +12,8 @@ World();
  
 ofPlanePrimitive world_plane;
 
+Player player; 
+
 void draw(); 
 void update();
 void setup();
@@ -18,6 +21,8 @@ void setup();
 void form();
 void rotateLeft();
 void rotateRight();
+void setXOff(float xoff);
+void setYOff(float yoff);
 float octaveNoise(int n,float x,float y,float p,float l);
 void tileType(float i,float j,float scale);
 
@@ -25,6 +30,8 @@ private:
 
 int _tile_size;
 int _buffer;
+float _xoff;
+float _yoff;
 float _w;
 float _h;
 float _height;

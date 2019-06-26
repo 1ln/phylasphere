@@ -4,7 +4,7 @@ Player::Player() {
 _x = 0;
 _y = 0;
 _radius = 0;
-_speed = 10;
+_speed = 0;
 } 
 
 void Player::setPosition(float x,float y) {
@@ -31,19 +31,17 @@ _radius = radius;
 void Player::setup() {
 //player.setRadius(_radius);
 //player.setResolution(5);
-player.set(16,16,16);
-player.setPosition(_x,_y,0);
+player.set(4,4,4);
+player.setPosition(_x,_y,125);
 } 
  
 void Player::drawPlayer() {
 
-    player.draw(); 
+    //player.draw(); 
 }
 
-void Player::draw() { 
-//drawPlayer();
-//ofNoFill();
-//ofSetColor(255,0,0,255);
+void Player::draw() {
+player.draw();
 }
 
 void Player::update() {
@@ -51,19 +49,26 @@ void Player::update() {
 }
 
 void Player::forward() {
+_speed += 4;
 //player.move(player.getYAxis()*_speed);
 }
 
-void Player::back() {
-//_y--;
+void Player::back() { 
+_speed -= 4 ;
+//cout << _speed << endl;
+//player.move(player.getYAxis()*(-_speed));
 }
 
 void Player::left() {
-//player.rotateDeg(-45,0,0,1);
+_speed += 4;
+//player.move(player.getXAxis()*_speed);
 }
 
 void Player::right() {
-//player.rotateDeg(10,0,0,1);
+_speed -= 4;
+//player.move(player.getXAxis()*(-_speed));
 }
 
-
+float Player::getSpeed() {
+return _speed;
+}

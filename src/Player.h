@@ -12,6 +12,7 @@ void drawPlayer();
 void setRadius(float radius);
 void setPosition(float x,float y);
 ofVec3f getPosition();
+float getSpeed();
 float getX();
 float getY();
  
@@ -29,9 +30,9 @@ ofBoxPrimitive player;
  
 private:
 
-float _radius;
 float _x;
 float _y;
+float _radius;
 float _speed;
 
 };

@@ -35,7 +35,7 @@ plateau.setPosition(_x,_y,0);
  
 void Plateau::drawPlateau() {
     plateau.draw();
-    setColor();
+    //setColor();
 }
 
 void Plateau::draw() { 
@@ -46,6 +46,7 @@ drawPlateau();
 }
 
 void Plateau::update() {
-//plateau.set(_r,_h,_r);
-//plateau.setPosition(_x,_y,0);
+plateau.set(_s,_s,_h);
+plateau.setPosition(_x,_y,0);
+setColor();
 }
