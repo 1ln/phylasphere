@@ -4,7 +4,8 @@ Player::Player() {
 _x = 0;
 _y = 0;
 _radius = 0;
-_speed = 0;
+_speedX = 0;
+_speedY = 0;
 } 
 
 void Player::setPosition(float x,float y) {
@@ -49,26 +50,31 @@ void Player::update() {
 }
 
 void Player::forward() {
-_speed += 4;
+_speedX += 4;
 //player.move(player.getYAxis()*_speed);
 }
 
 void Player::back() { 
-_speed -= 4 ;
+_speedX -= 4 ;
 //cout << _speed << endl;
 //player.move(player.getYAxis()*(-_speed));
 }
 
 void Player::left() {
-_speed += 4;
+_speedY += 4;
 //player.move(player.getXAxis()*_speed);
 }
 
 void Player::right() {
-_speed -= 4;
+_speedY -= 4;
 //player.move(player.getXAxis()*(-_speed));
 }
 
-float Player::getSpeed() {
-return _speed;
+float Player::getSpeedX() {
+return _speedX;
 }
+
+float Player::getSpeedY() { 
+return _speedY;
+}
+

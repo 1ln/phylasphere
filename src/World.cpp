@@ -5,7 +5,7 @@ _w = ofGetWidth();
 _h = ofGetHeight();
 _height = 0;
 _buffer = 16;
-_tile_size = 4;
+_tile_size = 8;
 _scale = 0;
 _xoff = 0;
 _yoff = 0;
@@ -16,11 +16,12 @@ void World::form() {
 for(int i = -256; i <= 256; i+=_tile_size) {
     for(int j = -256; j <= 256; j+=_tile_size) {
     tileType(i+(_xoff),j+(_yoff),100);
-    //_height = 100;
     tile.push_back(Plateau(i,j,_height,_c));
+    //cout << "i" << i << endl;
+    //cout << "j" << j << endl;
     }
 }
-
+//tile.clear();
 }
 
 float World::octaveNoise(int n,float x,float y,float p, float l) {
@@ -64,24 +65,24 @@ _r1 = ofRandom(0,.75);
 _r2 = ofRandom(1,8);
 _r3 = ofRandom(0,.45);
 
-
 form();
 
 for(int i = 0; i < tile.size(); ++i) {
-tile[i].setSize(_tile_size);
-tile[i].setup();
+//tile[i].setSize(_tile_size);
+//tile[i].setup();
 }
 }
 
-void World::setXOff(float xoff) {
+void World::setXYOff(float xoff, float yoff) {
 _xoff = xoff;
-tile.clear();
-}
-
-void World::setYOff(float yoff) {
 _yoff = yoff;
 tile.clear();
 }
+/*
+void World::setYOff(float yoff) {
+_yoff = yoff;
+tile.clear();
+} */
 
 void World::rotateLeft() {
 world_plane.rotateDeg(-45,0,0,1);

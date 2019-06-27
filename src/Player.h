@@ -12,7 +12,8 @@ void drawPlayer();
 void setRadius(float radius);
 void setPosition(float x,float y);
 ofVec3f getPosition();
-float getSpeed();
+float getSpeedX();
+float getSpeedY();
 float getX();
 float getY();
  
@@ -33,7 +34,8 @@ private:
 float _x;
 float _y;
 float _radius;
-float _speed;
+float _speedX;
+float _speedY;
 
 };
 

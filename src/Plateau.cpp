@@ -3,7 +3,7 @@
 Plateau::Plateau(float x,float y,float h,ofColor c) {
 _x = x;
 _y = y;
-_s = 16;
+_s = 8;
 _h = h;
 _c = c;
 }
@@ -29,8 +29,8 @@ _s = s;
 
 void Plateau::setup() {
 //c = ofRandom(0,1) *100;
-plateau.set(_s,_s,_h);
-plateau.setPosition(_x,_y,0);
+//plateau.set(_s,_s,_h);
+//plateau.setPosition(_x,_y,0);
 } 
  
 void Plateau::drawPlateau() {

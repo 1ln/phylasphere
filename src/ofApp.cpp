@@ -8,7 +8,7 @@ h = ofGetHeight();
 //cam.setTarget(ofVec3f(0,0,0));
 cam.setPosition(ofVec3f(w/2,h/2,1545));
 cam.lookAt(ofVec3f(w/2,h/2,0));
-cam.setTranslationSensitivity(0,0,5);
+//cam.setTranslationSensitivity(0,0,5);
 cam.orbitDeg(0,45,1545,ofVec3f(0,0,0));
 //cam.enableOrtho();
 //player.setRadius(10);
@@ -48,19 +48,19 @@ void ofApp::keyPressed(int key) {
 
 if(key == 'w') {
 player.forward();
-world.setXOff(player.getSpeed());
+world.setXYOff(player.getSpeedX(),player.getSpeedY());
 }
 if(key == 's') {
 player.back();
-world.setXOff(player.getSpeed());
+world.setXYOff(player.getSpeedX(),player.getSpeedY());
 }
 if(key == 'a') {
 player.left();
-world.setYOff(player.getSpeed());
+world.setXYOff(player.getSpeedX(),player.getSpeedY());
 }
 if(key == 'd') {
 player.right();
-world.setYOff(player.getSpeed());
+world.setXYOff(player.getSpeedX(),player.getSpeedY());
 }
 
 if(key == OF_KEY_LEFT) {

@@ -21,8 +21,8 @@ void setup();
 void form();
 void rotateLeft();
 void rotateRight();
-void setXOff(float xoff);
-void setYOff(float yoff);
+void setXYOff(float xoff, float yoff);
+//void setYOff(float yoff);
 float octaveNoise(int n,float x,float y,float p,float l);
 void tileType(float i,float j,float scale);
 
