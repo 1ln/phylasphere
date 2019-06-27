@@ -38,8 +38,8 @@ return _result;
 
 void World::tileType(float i,float j,float scale) {
 _scale = scale;
-//_n = octaveNoise(1,i*_r*100,j*_r*100,.25,2);
-_n1 = octaveNoise(_r2,i*_r*100,j*_r*100,_r3,_r1);
+_n1 = noise.octave(_r2,i*_r*100,j*_r*100,_r3,_r1);
+//_n1 = octaveNoise(_r2,i*_r*100,j*_r*100,_r3,_r1);
 //cout << _n << endl;
 //cout << "r : " << _r2 << endl;
 //if(_n < .25) {

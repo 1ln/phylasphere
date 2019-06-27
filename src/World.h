@@ -4,6 +4,7 @@
 #include "ofMain.h"
 #include "Plateau.h"
 #include "Player.h"
+#include "Noise.h"
 
 class World {
 
@@ -11,6 +12,7 @@ public:
 World();
  
 ofPlanePrimitive world_plane;
+Noise noise;
 
 Player player; 
 
@@ -22,7 +24,6 @@ void form();
 void rotateLeft();
 void rotateRight();
 void setXYOff(float xoff, float yoff);
-//void setYOff(float yoff);
 float octaveNoise(int n,float x,float y,float p,float l);
 void tileType(float i,float j,float scale);
 
