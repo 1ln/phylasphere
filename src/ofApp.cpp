@@ -17,7 +17,7 @@ cam.setParent(world.world_plane);
 //light.setAmbientColor(ofColor(255,255,255));
 //light2.setAmbientColor(ofColor(255,255,255));
 //light.setParent(world.world_plane);
-//light.setPosition(0,0,1000);
+light.setPosition(-500,-500,5000);
 //light2.setPosition(128,128,1500);
 world.rotateLeft();
 world.setup();
@@ -27,7 +27,6 @@ player.setup();
 
 void ofApp::update() {
 world.update();
-//player.rotate(_mloc_x,_mloc_y);
 //cam.lookAt(ofVec3f(w/2,h/2,0));
 }
 
@@ -35,7 +34,7 @@ void ofApp::draw() {
 ofEnableDepthTest();
 //player.draw();
 cam.begin();
-//light.enable();
+light.enable();
 //light2.enable();
 //player.draw();
 world.draw();
