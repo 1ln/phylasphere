@@ -49,10 +49,10 @@ _r3 = ofRandom(0,1);
 
 form();
 
-for(int i = 0; i < tile.size(); ++i) {
+//for(int i = 0; i < tile.size(); ++i) {
 //tile[i].setSize(_tile_size);
 //tile[i].setup();
-}
+//}
 
 }
 
@@ -72,7 +72,7 @@ world_plane.rotateDeg(45,0,0,1);
 
 void World::draw() {
 //cout << tile.size() << endl;
-for(int i = 0; i < tile.size(); ++i) {
+for(unsigned int i = 0; i < tile.size(); ++i) {
 tile[i].draw();
 //ofTranslate(_w/2,_h/2,0);
 //cout << i << endl;
@@ -82,7 +82,7 @@ tile[i].draw();
 
 void World::update() {
 form();
-for(int i = 0; i < tile.size(); ++i) {
+for(unsigned int i = 0; i < tile.size(); ++i) {
 tile[i].update();
 }
 }
