@@ -14,7 +14,7 @@ _yoff = 0;
 void World::form() {
 for(int i = -256; i <= 256; i+=_tile_size) {
     for(int j = -256; j <= 256; j+=_tile_size) {
-    tileType(i+(_xoff),j+(_yoff),25);
+    tileType(i+(_xoff)+_r,j+(_yoff)+_r,100);
     tile.push_back(Plateau(i,j,_height,_c));
     }
 }
@@ -22,38 +22,40 @@ for(int i = -256; i <= 256; i+=_tile_size) {
 
 void World::tileType(float i,float j,float scale) {
 _scale = scale;
-_n = noise.octave(_r2,i*_r*_scale,j*_r*_scale,_r3,_r1);
-_n1 = noise.octave(5,i*_r*_scale,j*_r*_scale,.5,.5);
+_n = noise.octave(8,i*_scale*.00001,j*_scale*.00001,.5,2);
+//_n1 = noise.octave(1,i*0.0001*_scale,j*_step*_scale,.5,2);
+//_n2 = noise.octave(1,i*0.0001*_scale,j*_step*_scale,.25,4);
+//_n3 = noise.octave(1,i*0.0001*_scale,j*_step*_scale,.5,4);
+//_n4 = noise.octave(1,i*0.0001*_scale,j*_step*_scale,.25,6);
+//_n5 = _n1 + _n2 + _n3 + _n4;
 if(_n < _level) {
 _height = 0;
 _c.set(0,100,235,255);
 } else {
-_c.set(0,_n1*255,0,255);
-    if(_n1 < .45) {
+//_c.set(0,_n*255,0,255);
+    //if(_n1 < .45) {
+    //cout << _n << endl;
+    _c.set(0,_n*_scale,0,255);
+    _height =  _n * _scale;
+    //} else if ( _n1 < .85 ) {
     //_c.set(0,_n1*255,0,255);
-    _height =  _n1 * _scale  ;
-    } else if ( _n1 < .85 ) {
+    //_height = _n1 * _scale * 2;
+    //} else { 
+    //_height = _n1 * _scale * 5;
     //_c.set(0,_n1*255,0,255);
-    _height = _n1 * _scale * 2;
-    } else { 
-    _height = _n1 * _scale * 5;
-    //_c.set(0,_n1*255,0,255);
+}
 //}
-}
-}
+//}
+//for(int i = 0; i < 100; ++i) { 
+//_scale += i;
+//}
 }
 
 void World::setup() {
-
 ofSeedRandom();
-
-_r = ofRandom(0,.0001);
-_r1 = ofRandom(0,.75);
-_r2 = ofRandom(21,23);
-_r3 = ofRandom(0,1);
-
-_level = ofRandom(.4,.5);
-
+_r = ofRandom(0,4000000) ;
+cout << _r << endl;
+_level = ofRandom(.4,.85);
 form();
 
 //for(int i = 0; i < tile.size(); ++i) {
@@ -67,6 +69,8 @@ void World::setXYOff(float xoff, float yoff) {
 _xoff = xoff;
 _yoff = yoff;
 tile.clear();
+//_r3 = ofRandom(0,1);
+//_r1 = ofRandom(0,.75);
 }
 
 void World::rotateLeft() {

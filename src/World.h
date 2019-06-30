@@ -36,14 +36,11 @@ float _w;
 float _h;
 float _height;
 float _n; 
-float _n1; 
 float _level;
-float _r;
-float _r1;
-float _r2;
-float _r3; 
-ofColor _c;
 float _scale;
+float _r;
+ofColor _c;
+float _step;
 vector <Plateau> tile;
 //string _type;
 

@@ -16,6 +16,7 @@ for(int i = 0; i < octaves; ++i) {
 _result += ofNoise(x*_freq,y*_freq) * _amp;
 _amp *= p;
 _freq *= l;
-} 
+}
+//cout << _result << endl; 
 return _result; 
 }
