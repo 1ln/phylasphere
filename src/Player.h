@@ -8,35 +8,37 @@ class Player {
 public:
 Player();
 
-void drawPlayer();
-void setRadius(float radius);
-void setPosition(float x,float y);
-ofVec3f getPosition();
-float getSpeedX();
-float getSpeedY();
-float getX();
-float getY();
+void radius(float r);
+void position(float x,float y);
+void speed(float s);
+float speedX();
+float speedY();
+float x();
+float y(); 
  
 void back(); 
 void forward();
 void left(); 
 void right();
+void mouseFromWorld(ofVec3f v);
+void rotate(float x,float y);
 
 void setup();
 void update();
 void draw();
 
-ofBoxPrimitive player;
-//ofIcoSpherePrimitive player;
+ofBoxPrimitive box;
  
 private:
 
 float _x;
 float _y;
-float _radius;
+float _r;
+float _speed;
 float _speedX;
 float _speedY;
-
+ofVec3f _v;
+ofVec3f _mouse;
 };
 
 #endif

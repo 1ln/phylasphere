@@ -21,10 +21,12 @@ void update();
 void setup();
 
 void form();
-void rotateLeft();
-void rotateRight();
-void setXYOff(float xoff, float yoff);
-void tileType(float i,float j,float scale);
+void scale(float s);
+void rotX(float x);
+void rotY(float y);
+void rotate45();
+void offXY(float xoff, float yoff);
+void tileType(float i,float j);
 
 private:
 

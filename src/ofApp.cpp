@@ -5,21 +5,13 @@ void ofApp::setup() {
 ofBackground(185);
 w = ofGetWidth();
 h = ofGetHeight();
-//cam.setTarget(ofVec3f(0,0,0));
 cam.setPosition(ofVec3f(w/2,h/2,1545));
 cam.lookAt(ofVec3f(w/2,h/2,0));
-//cam.setTranslationSensitivity(0,0,5);
-cam.orbitDeg(0,45,1545,ofVec3f(0,0,0));
+cam.orbitDeg(0,45,1000,ofVec3f(0,0,0));
 //cam.enableOrtho();
-//player.setRadius(10);
-//player.setPosition(0,0);
 cam.setParent(world.world_plane);
 //light.setAmbientColor(ofColor(255,255,255));
-//light2.setAmbientColor(ofColor(255,255,255));
-//light.setParent(world.world_plane);
-//light.setPosition(-500,-500,5000);
-//light2.setPosition(128,128,1500);
-world.rotateLeft();
+world.rotate45();
 world.setup();
 
 player.setup();
@@ -28,15 +20,14 @@ player.setup();
 void ofApp::update() {
 world.update();
 //cam.lookAt(ofVec3f(w/2,h/2,0));
+//player.rotate(mouse.x,mouse.y);
+player.mouseFromWorld(cam.screenToWorld(mouse));
 }
 
 void ofApp::draw() {
 ofEnableDepthTest();
-//player.draw();
 cam.begin();
 //light.enable();
-//light2.enable();
-//player.draw();
 world.draw();
 player.draw();
 //ofDrawBox (0,0,85,6,6,6);
@@ -47,28 +38,28 @@ void ofApp::keyPressed(int key) {
 
 if(key == 'w') {
 player.forward();
-world.setXYOff(player.getSpeedX(),player.getSpeedY());
+world.offXY(player.speedX(),player.speedY());
 }
 if(key == 's') {
 player.back();
-world.setXYOff(player.getSpeedX(),player.getSpeedY());
+world.offXY(player.speedX(),player.speedY());
 }
 if(key == 'a') {
 player.left();
-world.setXYOff(player.getSpeedX(),player.getSpeedY());
+world.offXY(player.speedX(),player.speedY());
 }
 if(key == 'd') {
 player.right();
-world.setXYOff(player.getSpeedX(),player.getSpeedY());
+world.offXY(player.speedX(),player.speedY());
 }
 
 if(key == OF_KEY_LEFT) {
 //cout << "rotate left" << endl;
-world.rotateLeft();
+//world.rotateLeft();
 }
 
 if(key == OF_KEY_RIGHT) {
-world.rotateRight();
+//world.rotateRight();
 }
 
 } 

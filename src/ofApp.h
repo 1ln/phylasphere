@@ -18,7 +18,7 @@ void mouseMoved(int x,int y);
 float w = 0;
 float h = 0;
  
-ofEasyCam cam;
+ofCamera cam;
 Player player;
 World world;
 
@@ -26,7 +26,6 @@ ofLight light;
 ofLight light2;
 
 ofPoint mouse;
-
 private:
 
 float _mloc_x;

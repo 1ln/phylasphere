@@ -3,7 +3,7 @@
 Plateau::Plateau(float x,float y,float h,ofColor c) {
 _x = x;
 _y = y;
-_s = 8;
+_s = 16;
 _h = h;
 _c = c;
 }
