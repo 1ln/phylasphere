@@ -2,7 +2,7 @@
 
 void ofApp::setup() {
 
-ofBackground(185);
+ofBackground(0);
 w = ofGetWidth();
 h = ofGetHeight();
 cam.setPosition(ofVec3f(w/2,h/2,1545));
@@ -19,9 +19,10 @@ player.setup();
 
 void ofApp::update() {
 world.update();
-//cam.lookAt(ofVec3f(w/2,h/2,0));
-//player.rotate(mouse.x,mouse.y);
-player.mouseFromWorld(cam.screenToWorld(mouse));
+//player.forward();
+//world.offXY(player.speedX(),player.speedY());
+
+//player.mouseFromWorld(cam.screenToWorld(mouse));
 }
 
 void ofApp::draw() {
@@ -40,6 +41,8 @@ if(key == 'w') {
 player.forward();
 world.offXY(player.speedX(),player.speedY());
 }
+
+/*
 if(key == 's') {
 player.back();
 world.offXY(player.speedX(),player.speedY());
@@ -52,6 +55,7 @@ if(key == 'd') {
 player.right();
 world.offXY(player.speedX(),player.speedY());
 }
+*/
 
 if(key == OF_KEY_LEFT) {
 //cout << "rotate left" << endl;

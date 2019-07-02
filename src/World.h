@@ -3,7 +3,6 @@
 
 #include "ofMain.h"
 #include "Plateau.h"
-#include "Player.h"
 #include "Noise.h"
 
 class World {
@@ -13,8 +12,6 @@ World();
  
 ofPlanePrimitive world_plane;
 Noise noise;
-
-Player player; 
 
 void draw(); 
 void update();
@@ -45,7 +42,7 @@ ofColor _c;
 float _step;
 vector <Plateau> tile;
 //string _type;
-
+bool _light;
 };
 
 #endif
