@@ -11,6 +11,10 @@ Plateau(float x,float y,float h,ofColor c,bool light);
 void drawPlateau();
 void colorSides();
 void setHeight(float h);
+void addX(int x);
+void addY(int y);
+float X();
+float Y();
 void setSize(float s);
 void setPosition(float x,float y);
 
@@ -29,6 +33,7 @@ float _x;
 float _y;
 float _h;
 ofColor _c;
+ofMaterial material;
  
 
 };

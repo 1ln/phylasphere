@@ -5,14 +5,17 @@ void ofApp::setup() {
 ofBackground(0);
 w = ofGetWidth();
 h = ofGetHeight();
-cam.setPosition(ofVec3f(w/2,h/2,1545));
-cam.lookAt(ofVec3f(w/2,h/2,0));
+world.setup();
+//world.rotate45();
+cam.setParent(world.world_plane);
+//cam.setPosition(ofVec3f(0,0,1545));
+cam.lookAt(ofVec3f(0,0,0));
 cam.orbitDeg(0,45,1000,ofVec3f(0,0,0));
 //cam.enableOrtho();
-cam.setParent(world.world_plane);
+//cam.setParent(world.world_plane);
 //light.setAmbientColor(ofColor(255,255,255));
 world.rotate45();
-world.setup();
+//world.setup();
 
 player.setup();
 }
@@ -30,8 +33,7 @@ ofEnableDepthTest();
 cam.begin();
 //light.enable();
 world.draw();
-player.draw();
-//ofDrawBox (0,0,85,6,6,6);
+//player.draw();
 cam.end();
 }
 

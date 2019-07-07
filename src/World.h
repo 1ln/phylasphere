@@ -43,6 +43,8 @@ float _step;
 vector <Plateau> tile;
 //string _type;
 bool _light;
+int _i;
+int _k;
 };
 
 #endif

@@ -3,7 +3,7 @@
 Plateau::Plateau(float x,float y,float h,ofColor c,bool light) {
 _x = x;
 _y = y;
-_s = 8;
+_s = 16;
 _h = h;
 _c = c;
 _light = light;
@@ -24,27 +24,42 @@ void Plateau::setHeight(float h) {
 _h = h;
 }
 
+float Plateau::X() {
+return _x;
+}
+
+float Plateau::Y() {
+return _y;
+}
+
+void Plateau::addX(int x) {
+_x += x;
+}
+
+void Plateau::addY(int y) {
+_y += y;
+}
+
 void Plateau::setSize(float s) {
 _s = s;
 }
 
 void Plateau::setup() {
 //c = ofRandom(0,1) *100;
-//plateau.set(_s,_s,_h);
-//plateau.setPosition(_x,_y,0);
-//light.setPointLight();
+plateau.set(_s,_s,_h);
+plateau.setPosition(_x,_y,0);
+light.setPointLight();
+material.setEmissiveColor(ofColor(255,255,255,255));
 } 
- 
-void Plateau::drawPlateau() {
-    plateau.draw();
-    //setColor();
-}
 
-void Plateau::draw() { 
-drawPlateau();
+void Plateau::draw() {
+
+material.begin();
+plateau.draw();
+material.end();
 
 if(_light == true) {
-light.enable();
+//light->enable();
 }
 
 }
@@ -56,6 +71,6 @@ colorSides();
 if(_light == true) {
 light.setPosition(_x,_y,_h+5);
 light.setAttenuation(.00001,.001,.001);
-//light.enable();
+light.enable();
 }
 }
