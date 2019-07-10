@@ -20,6 +20,7 @@ void World::init() {
     _tile_width = 8;
     _steps = _map_width / _tile_width;
     _total_tiles = _steps * _steps;
+    //_ambient_lighting.setAmbientColor(ofColor(0,0,0));
 
     tileType(_r,_r);
     tile.push_back(Plateau(0,0,_elevation,_c,_light));
@@ -37,7 +38,7 @@ _elevation = 0;
 _c.set(0,5,75*_n,155);
 _light = false;
 }
-    if(_n > .485 && _n < .488) {
+    if(_n > .479 && _n < .48) {
     _elevation = _n*_scale;
     _c.set(_n*15,_n*15,_n*15,255);
     _light = true;
@@ -54,41 +55,19 @@ void World::setup() {
  
 ofSeedRandom(); 
 
-//_steps = _map_width / _tile_width;
-//scale(100);
-//_r = ofRandom(0,4000000);
-//_level = ofRandom(.4,.85);
-
 init();
-//world_plane.setPosition(tile[128+(_tile_width/2)].X(),tile[128+(_tile_width/2)].Y(),0);
-
-//for(int i = 0; i < tile.size(); ++i) {
-//tile[i].setSize(_tile_size);
-//tile[i].setup();
-//}
 
 }
 
 void World::remap() {
-//_xoff = xoff;
-//_yoff = yoff;
-
-//cout << "x " << tile[tile.size()/2].X() << endl;
-//cout << "y " << tile[tile.size()/2].Y() << endl;
 
 tile[0].addX(_tile_width);
-//cout << "x_0 " << tile[0].X() << endl;
-//cout << "y_0 " << tile[0].Y() << endl;
-    for(int i = 0; i < _map_width; i+= _tile_width) {
-        //if(j != 0) { j = 0; }
+for(int i = 0; i < _map_width; i+= _tile_width) {
     tileType((tile[0].X())+_r,i+_r);
     tile.insert(tile.begin(), Plateau((tile[0].X()),i,_elevation,_c,_light));
-    //cout << tile[0].X() << endl;
-    //cout << tile[0].Y() << endl;
 }
-//tile[0].addX(_tile_width);
 
-if(tile.size() > (_total_tiles - _steps)) {
+if(tile.size() >= _total_tiles) {
 for(int i = 1; i <= _steps; ++i) {
 tile.erase(tile.end()+i);
 }
@@ -123,11 +102,19 @@ void World::update() {
 //cout << tile.size() << endl;
 remap();
 
-world_plane.setPosition(tile[127+(_tile_width/2)].X(),tile[127+(_tile_width/2)].Y(),0);
+if(tile.size() >= _total_tiles/2) {
+world_plane.setPosition(tile[((_total_tiles-_steps)/2)].X(),tile[((_total_tiles-_steps)/2)].Y(),0);
+_ambient_lighting.setPosition(tile[((_total_tiles-_steps)/2)].X(),tile[((_total_tiles-_steps)/2)].Y(),2500);
+//_ambient_lighting.enable();
+
+} else {
+world_plane.setPosition(_map_width/2,_map_width/2,0);
+_ambient_lighting.setPosition(_map_width/2,_map_width/2,2500);
+}
+
 for(unsigned int i = 0; i < tile.size(); ++i) {
 tile[i].update();
 }
-//world_plane.setPosition(tile[0].X()+(-128),tile[0].Y()+(-128),0);
 
 }
 

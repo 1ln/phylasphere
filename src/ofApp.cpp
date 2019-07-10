@@ -6,14 +6,10 @@ ofBackground(0);
 w = ofGetWidth();
 h = ofGetHeight();
 world.setup();
-//world.rotate45();
 cam.setParent(world.world_plane);
-//cam.setPosition(ofVec3f(0,0,1545));
 cam.lookAt(ofVec3f(0,0,0));
 cam.orbitDeg(0,45,1000,ofVec3f(0,0,0));
 //cam.enableOrtho();
-//cam.setParent(world.world_plane);
-//light.setAmbientColor(ofColor(255,255,255));
 world.rotate45();
 //world.setup();
 
@@ -31,7 +27,6 @@ world.update();
 void ofApp::draw() {
 ofEnableDepthTest();
 cam.begin();
-//light.enable();
 world.draw();
 //player.draw();
 cam.end();
