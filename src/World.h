@@ -11,6 +11,7 @@ public:
 World();
  
 ofPlanePrimitive world_plane;
+ofBoxPrimitive box;
 Noise noise;
 
 void draw(); 
@@ -39,8 +40,9 @@ int _total_tiles;
 ofLight _ambient_lighting;
 ofColor _c;
 float _steps;
-vector <Plateau> tile;
-vector <ofBoxPrimitive> box;
+int _x_width;
+//vector <Plateau> tile;
+vector <ofBoxPrimitive> tile;
 bool _light;
 float _map_width;
 };
