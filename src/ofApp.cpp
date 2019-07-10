@@ -41,7 +41,7 @@ void ofApp::keyPressed(int key) {
 
 if(key == 'w') {
 player.forward();
-world.offXY(player.speedX(),player.speedY());
+//world.offXY(player.speedX(),player.speedY());
 }
 
 /*

@@ -17,34 +17,30 @@ void draw();
 void update();
 void setup();
 
-void form();
+void init();
 void scale(float s);
 void rotX(float x);
 void rotY(float y);
 void rotate45();
-void offXY(float xoff, float yoff);
+void remap();
 void tileType(float i,float j);
 
 private:
 
-int _tile_size;
+int _tile_width;
 int _buffer;
-float _xoff;
-float _yoff;
 float _w;
 float _h;
-float _height;
+float _elevation;
 float _n; 
-float _level;
 float _scale;
 float _r;
+int _total_tiles;
 ofColor _c;
-float _step;
+float _steps;
 vector <Plateau> tile;
-//string _type;
 bool _light;
-int _i;
-int _k;
+float _map_width;
 };
 
 #endif
