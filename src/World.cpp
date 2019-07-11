@@ -21,12 +21,12 @@ void World::init() {
     _tile_width = 8;
     _steps = _map_width / _tile_width;
     _total_tiles = _steps * _steps;
-    //_ambient_lighting.setAmbientColor(ofColor(0,0,0));
-
-    tileType(_r,_r);
-    box.set(_tile_width,_tile_width,_elevation);
-    box.setPosition(0,0,0);
-    tile.push_back(box);
+    _ambient_lighting.setAmbientColor(ofColor(0,0,0));
+    
+    //tileType(_r,_r);
+    //box.set(_tile_width,_tile_width,_elevation);
+    //box.setPosition(0,0,0);
+    //tile.push_back(box);
 
 }
 
@@ -37,6 +37,7 @@ _scale = s;
 void World::tileType(float i,float j) {
 _n = noise.octave(8,i*_scale*.00001,j*_scale*.00001,.5,2);
 if(_n < .48) {
+
 _elevation = 0;
 _c.set(0,5,75*_n,155);
 _light = false;
@@ -64,21 +65,16 @@ init();
 
 void World::remap() {
 
-//_x_width += _tile_width;
-//tile[0].setPosition(tile[0].getX()+_x_width,0,0);
-
-for(int i = 0; i < _map_width; i+= _tile_width) {
-    tileType((tile[0].getX()+_x_width)+_r,i+_r);
-    box.set(_tile_width,_tile_width,_elevation);
-    box.setPosition(tile[0].getX()+_x_width,i,0);
-    tile.insert(tile.begin(),box);
-_x_width += _tile_width;
-}
-
 if(tile.size() >= _total_tiles) {
-for(int i = 1; i <= _steps; ++i) {
-tile.erase(tile.end()+i);
+tile.erase(tile.begin(),tile.begin()+32);
 }
+
+_x_width += _tile_width;
+for(int i = 0; i < _map_width-1; i+= _tile_width) {
+    tileType(_x_width+_r,i+_r);
+    box.set(_tile_width,_tile_width,_elevation);
+    box.setPosition(_x_width,i,0);
+    tile.push_back(box);
 }
 
 }
@@ -110,14 +106,14 @@ void World::update() {
 //cout << tile.size() << endl;
 remap();
 
-if(tile.size() >= _total_tiles/2) {
+if(tile.size() >= 1024) {
 world_plane.setPosition(tile[((_total_tiles-_steps)/2)].getX(),tile[((_total_tiles-_steps)/2)].getY(),0);
 _ambient_lighting.setPosition(tile[((_total_tiles-_steps)/2)].getX(),tile[((_total_tiles-_steps)/2)].getY(),2500);
-//_ambient_lighting.enable();
+_ambient_lighting.enable();
 
 } else {
 world_plane.setPosition(_map_width/2,_map_width/2,0);
-_ambient_lighting.setPosition(_map_width/2,_map_width/2,2500);
+//_ambient_lighting.setPosition(_map_width/2,_map_width/2,2500);
 }
 
 //for(unsigned int i = 0; i < tile.size(); ++i) {

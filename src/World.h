@@ -4,6 +4,7 @@
 #include "ofMain.h"
 #include "Plateau.h"
 #include "Noise.h"
+#include "deque"
 
 class World {
 
@@ -42,9 +43,10 @@ ofColor _c;
 float _steps;
 int _x_width;
 //vector <Plateau> tile;
-vector <ofBoxPrimitive> tile;
+deque <ofBoxPrimitive> tile;
 bool _light;
 float _map_width;
+int _k;
 };
 
 #endif
