@@ -13,7 +13,7 @@ cam.orbitDeg(0,45,1000,ofVec3f(0,0,0));
 world.rotate45();
 //world.setup();
 
-player.setup();
+//player.setup();
 }
 
 void ofApp::update() {
@@ -30,12 +30,13 @@ cam.begin();
 world.draw();
 //player.draw();
 cam.end();
+world.lights_enable();
 }
 
 void ofApp::keyPressed(int key) {
 
 if(key == 'w') {
-player.forward();
+//player.forward();
 //world.offXY(player.speedX(),player.speedY());
 }
 

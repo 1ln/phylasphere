@@ -23,6 +23,7 @@ void init();
 void scale(float s);
 void rotX(float x);
 void rotY(float y);
+void lights_enable();
 void sideColor();
 void rotate45();
 void remap();

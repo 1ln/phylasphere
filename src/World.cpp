@@ -46,18 +46,18 @@ _n = noise.octave(8,i*_scale*.00001,j*_scale*.00001,.5,2);
 if(_n < .48) {
 
 _elevation = 10;
-_c.set(0,5,75*_n,255);
-//material.setEmissiveColor(ofColor(0,5,75*_n,255));
+//_c.set(0,5,75*_n,255);
+//material.setDiffuseColor(_c);
 
 _light = false;
 }
     if(_n > .48 && _n < .49) {
     _elevation = _n*_scale;
-    _c.set(_n*15,_n*15,_n*15,255);
+    //_c.set(_n*15,_n*15,_n*15,255);
     _light = true;
 }
     if(_n > .49) {
-    _c.set(_n*15,_n*15,_n*15,255);
+    //_c.set(_n*15,_n*15,_n*15,255);
     _elevation =  _n * _scale;
     _light = false;     
 }
@@ -78,8 +78,8 @@ materials.erase(materials.begin(),materials.begin()+_steps);
 tile.erase(tile.begin(),tile.begin()+_steps);
 }
 
-if(lights.size() >= 1128) {
-lights.erase(lights.begin(),lights.begin()+1);
+if(lights.size() >= 35) {
+//lights.erase(lights.begin(),lights.begin()+1);
 }
 
 _x_width += _tile_width;
@@ -88,7 +88,15 @@ for(int i = 0; i < _map_width-1; i+= _tile_width) {
 
     tileType(_x_width+_r,i+_r);
     
-    material.setEmissiveColor(ofColor(5,5,5));
+    //if(_light == true) {
+    _c.set(_n*255,0,0);
+    //}
+
+    material.setDiffuseColor(_c);
+    //} else {
+    //sideColor();
+//}
+
     materials.push_back(material);
   
     box.set(_tile_width,_tile_width,_elevation);
@@ -97,17 +105,18 @@ for(int i = 0; i < _map_width-1; i+= _tile_width) {
     //material.end();
     tile.push_back(box);
 
-    if(_light == true) {
-    light.setPointLight();
-    light.setPosition(_x_width,i,_elevation+5);
-    light.setAttenuation(0.0001,0.001,0.001);
+    //if(_light == true) {
+    //light.setup();
+    //light.setPointLight();
+    //light.setPosition(_x_width,i,_elevation+5);
+    //light.setAttenuation(0.0001,0.001,0.001);
+    //light.setParent(box);
+    //light.setup();
     //light.enable();
-
-    lights.push_back(light);
-    }
+    //lights.push_back(light);
+    //}
 
 }
-
 }
 
 void World::rotate45() {
@@ -124,6 +133,7 @@ world_plane.rotateDeg(y,0,0,1);
 
 void World::draw() {
 
+//material.begin();
 for(unsigned int i = 0; i < tile.size(); ++i) {
 
 //material.begin();
@@ -131,15 +141,17 @@ materials[i].begin();
 tile[i].draw();
 materials[i].end();
 //material.end();
+}
+//material.end();
 
+}
+
+void World::lights_enable() {
 for(unsigned int i = 0; i < lights.size(); ++i) {
 //lights[i].enable();
-}
+//lights[i].draw();
 
 }
-
-
-
 
 //ofDrawBox(tile[128+8].X(),tile[128+8].Y(),100,5,5,5);
 //ofDrawBox(0,0,125,5,5,5);
@@ -153,9 +165,9 @@ remap();
 
 if(tile.size() >= _total_tiles) {
 world_plane.setPosition(tile[((_total_tiles-_steps)/2)].getX(),tile[((_total_tiles-_steps)/2)].getY(),0);
-//_ambient_lighting.setPosition(tile[((_total_tiles-_steps)/2)].getX(),tile[((_total_tiles-_steps)/2)].getY(),2500);
-//_ambient_lighting.enable();
-
+light.setPosition(tile[((_total_tiles-_steps)/2)].getX(),tile[((_total_tiles-_steps)/2)].getY(),_elevation+25);
+light.enable();
+light.draw();
 } else {
 world_plane.setPosition(_map_width/2,_map_width/2,0);
 //_ambient_lighting.setPosition(_map_width/2,_map_width/2,2500);

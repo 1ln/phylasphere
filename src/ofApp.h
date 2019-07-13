@@ -19,11 +19,11 @@ float w = 0;
 float h = 0;
  
 ofCamera cam;
-Player player;
+//Player player;
 World world;
 
-ofLight light;
-ofLight light2;
+//ofLight light;
+//ofLight light2;
 
 ofPoint mouse;
 private:
