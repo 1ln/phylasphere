@@ -30,7 +30,7 @@ cam.begin();
 world.draw();
 //player.draw();
 cam.end();
-world.lights_enable();
+//world.lights_enable();
 }
 
 void ofApp::keyPressed(int key) {

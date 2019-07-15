@@ -22,7 +22,7 @@ void setup();
 void update();
 void draw();
 
-ofBoxPrimitive plateau;
+ofBoxPrimitive box;
 
 private:
 

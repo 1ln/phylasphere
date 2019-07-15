@@ -2,7 +2,7 @@
 #define _World
 
 #include "ofMain.h"
-#include "Plateau.h"
+//#include "Plateau.h"
 #include "Noise.h"
 #include "deque"
 
@@ -32,7 +32,7 @@ void tileType(float i,float j);
 private:
 
 int _tile_width;
-int _buffer;
+float _hue;
 float _w;
 float _h;
 float _elevation;
@@ -45,13 +45,15 @@ ofColor _c;
 float _steps;
 int _x_width;
 ofLight light;
+ofColor light_col;
+ofColor material_col;
+//ofBoxPrimitive box;
 deque <ofLight> lights;
 ofMaterial material;
-deque <ofBoxPrimitive> tile;
+deque <ofBoxPrimitive> boxes;
 deque <ofMaterial> materials;
 bool _light;
 float _map_width;
-int _k;
 };
 
 #endif

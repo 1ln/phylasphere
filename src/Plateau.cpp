@@ -2,18 +2,18 @@
 
 Plateau::Plateau(float x,float y,float h,ofColor c,bool light) {
 _x = x;
-_y = y;
-_s = 8;
+y = y;
+_s = 4;
 _h = h;
 _c = c;
 _light = light;
 }
 
 void Plateau::colorSides() {
-//for(int i = 0; i < 6; ++i) { 
-//plateau.setSideColor(i,_c);
-//} 
-//ofSetColor(15,15,15,255);
+for(int i = 0; i < 6; ++i) { 
+box.setSideColor(i,_c);
+} 
+ofSetColor(15,15,15,255);
 }
 
 void Plateau::setPosition(float x,float y) {
@@ -46,18 +46,12 @@ _s = s;
 }
 
 void Plateau::setup() {
-//c = ofRandom(0,1) *100;
-//plateau.set(_s,_s,_h);
-//plateau.setPosition(_x,_y,0);
-//light.setPointLight();
-//light.setAttenuation(0.00001,.001,.001);
-//material.setEmissiveColor(ofColor(25,25,255,155));
 } 
 
 void Plateau::draw() {
-
+update();
 material.begin();
-plateau.draw();
+box.draw();
 material.end();
 
 if(_light == true) {
@@ -67,17 +61,15 @@ light.enable();
 }
 
 void Plateau::update() {
-plateau.set(_s,_s,_h);
-plateau.setPosition(_x,_y,0);
+box.set(_s,_s,_h);
+box.setPosition(_x,_y,0);
 //colorSides();
 if(_light == true) {
-light.setPosition(_x,_y,_h);
+light.setPosition(_x,_y,_h+5);
 light.setAttenuation(.00001,.001,.001);
 //light.setPointLight();
 }
-//material.setAmbientColor(ofColor(15,15,15,255));
-material.setEmissiveColor(ofColor(15,15,15,255));
+material.setDiffuseColor(ofColor(5,5,5,255));
 
-//light.enable();
-//}
+
 }
