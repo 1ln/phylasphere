@@ -35,33 +35,11 @@ cam.end();
 
 void ofApp::keyPressed(int key) {
 
-if(key == 'w') {
-//player.forward();
-//world.offXY(player.speedX(),player.speedY());
-}
 
-/*
-if(key == 's') {
-player.back();
-world.offXY(player.speedX(),player.speedY());
-}
 if(key == 'a') {
-player.left();
-world.offXY(player.speedX(),player.speedY());
-}
-if(key == 'd') {
-player.right();
-world.offXY(player.speedX(),player.speedY());
-}
-*/
-
-if(key == OF_KEY_LEFT) {
-//cout << "rotate left" << endl;
-//world.rotateLeft();
 }
 
-if(key == OF_KEY_RIGHT) {
-//world.rotateRight();
+if(key == OF_KEY_RETURN) {
 }
 
 } 
