@@ -35,14 +35,19 @@ cam.end();
 
 void ofApp::keyPressed(int key) {
 
-
 if(key == 'a') {
+world.input_activated();
+//cout << "test" << endl;
 }
 
-if(key == OF_KEY_RETURN) {
 }
 
-} 
+void ofApp::keyReleased(int key) {
+if(key == 'a') {
+//cout << "test1" << endl;
+//world.input_deactivated();
+}
+}
 
 void ofApp::mouseMoved(int x,int y) {
 mouse.x = x;

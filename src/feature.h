@@ -4,8 +4,9 @@
 #include "ofMain.h"
 
 enum Feature { 
-LAND,
-WATER
+LAND, 
+WATER,
+TEST
 
 };
 
