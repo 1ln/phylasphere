@@ -91,7 +91,8 @@ _tile_boxes.erase(_tile_boxes.begin(),_tile_boxes.begin()+_steps);
 if(_boxes.size() > 0) { 
 for(unsigned int i = 0; i < _boxes.size(); ++i) {
 if(_boxes[i].getX() < (_x_width-_map_width)) {
-_boxes.erase(_boxes[i]);
+_boxes.erase(_boxes.begin() + i,_boxes.begin()+i+1 );
+cout << i << endl;
 }
 }
 }
@@ -181,7 +182,7 @@ input_deactivate();
 for(unsigned int i = 0; i < _boxes.size(); ++i) { 
     if(_input == true) {
         if(_spotlight_radius*2 > ofDistSquared(_spotlight.getX(),_spotlight.getY(),_boxes[i].getX(),_boxes[i].getY())) {
-        cout << _boxes[i].getX() << endl;
+ //       cout << _boxes[i].getX() << endl;
         
     //if(_input == true) {
     //cout << _boxes[i].getX() << endl;         
