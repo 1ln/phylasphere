@@ -13,13 +13,11 @@ _amp = 1;
 _result = 0;
 
 for(int i = 0; i < octaves; ++i) { 
-
 _result += ofNoise(x*_freq,y*_freq) * _amp;
 _amp *= p;
 _freq *= l;
 
 }
-
-_result = ofNormalize(_result,0,1);
+//_result = ofNormalize(_result,0,2);
 return _result; 
 }

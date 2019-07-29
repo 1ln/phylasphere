@@ -4,20 +4,18 @@
 
 #include "feature.h"
 #include "Noise.h"
+#include "Orbiter.h"
 
-#include "deque"
+#include "ofxBullet.h"
 
 class ofApp : public ofBaseApp {
 
 public:
 
-ofCamera cam;
-
-ofPlanePrimitive plane;
-
+ofEasyCam cam;
 ofPoint mouse;
 
-Noise noise2;
+Orbiter orb;
 Noise noise;
 
 void draw(); 
@@ -26,9 +24,11 @@ void setup();
 
 //void mouseMoved(int x,int y);
 void keyPressed(int key);
+void keyReleased(int key);
 
 void input_deactivate();
 void tileType(float i,float j);
+void map_init();
 
 Feature _type;
 
@@ -48,21 +48,20 @@ float _r;
 int _total_tiles;
 ofColor _c;
 float _steps;
-int _x_width;
-ofLight _spotlight;
-float _spotlight_radius;
-float _box_radius;
-ofColor _light_col;
-float _spotlight_x;
-float _spotlight_y; 
+//ofLight _spotlight;
+//ofLight _light;
+//float _spotlight_radius;
+//float _box_radius;
+//ofColor _light_col;
+//float _spotlight_x;
+//float _spotlight_y; 
 
-ofBoxPrimitive _tile_box;
-ofBoxPrimitive _box;
-deque <ofBoxPrimitive> _tile_boxes;
-deque <ofBoxPrimitive> _boxes;
+ofxBulletWorldRigid world;
 
-bool _light;
+vector <ofColor> _tile_box_color;
+vector <shared_ptr <ofxBulletRigidBody>> _tile_boxes;
+vector <shared_ptr <ofxBulletRigidBody>> _boxes;
+
 float _map_width;
-bool _input;
 float _start_timer;
 };

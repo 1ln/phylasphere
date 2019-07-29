@@ -8,12 +8,9 @@ class Orbiter {
 public:
 Orbiter();
 
-float getRadius();
-void setRadius(float radius);
-void setSpeed(float speed);
-void thrusters(float inc);
-void setPosition(float x,float y);
-void setRotationalCenter(float cx, float cy);
+void radius(float r);
+void speed(float s);
+void rotationalCenter(float cx, float cy);
 
 void setup();
 void update();
@@ -21,9 +18,10 @@ void draw();
 
 private:
 
-float _speed;
-float _radius;
-float _orbital_radius;
+float _s;
+float _a;
+float _r;
+ofLight _light;
 float _cx;
 float _cy;
 float _x;
