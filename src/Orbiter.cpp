@@ -6,7 +6,7 @@ _y = 0;
 _cx = 0;
 _cy = 0;
 _r = 550;
-_a = 0;
+_a = ofRandom(0,TWO_PI);
 }
 
 void Orbiter::rotationalCenter(float cx,float cy) {
@@ -32,7 +32,7 @@ _light.draw();
 }
 
 void Orbiter::update() {
-_a += 0.00001;
+_a += 0.001;
 _x = _cx + cos(_a) * _r;
 _y = _cy + sin(_a) * _r;
 

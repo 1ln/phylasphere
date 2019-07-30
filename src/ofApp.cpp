@@ -5,9 +5,12 @@ void ofApp::setup() {
 _w = ofGetWidth();
 _h = ofGetHeight();
 
+_draw_sys_info = false;
+_draw_sys_count = 0;
+font.load("arial.ttf",10);
+
 _elevation = 0;
-//_spotlight_x = 0;
-//_spotlight_y = 10000;
+_elevation_reverse = 0;
     
 _r = ofRandom(0,4000000);
 _scale = ofRandom(100,195);
@@ -15,17 +18,6 @@ _map_width = 256;
 _tile_width = 4;
 _steps = _map_width / _tile_width;
 _total_tiles = _steps * _steps;
-
-//_light_col.setHsb(255,0,255);
-
-//_light.setDiffuseColor(_light_col);
-//_spotlight.setSpotlight();
-
-//_light.setDirectional();
-//_light.setPosition(ofVec3f(0,500,0));
-
-//_spotlight.setSpotConcentration(75);
-//_spotlight.setSpotlightCutOff(12);
 
 ofBackground(155);
 
@@ -50,41 +42,57 @@ map_init();
 
 void ofApp::tileType(float i,float j) {
 
-_n = noise.octave(8,i*_scale*.00001,j*_scale*.00001,.5,2);
-_n1 = noise.octave(8,i*_scale*.0001,j*_scale*.0001,.05,4);
+//_n = noise.octave(4,i*_scale*.00001,j*_scale*.00001,.5,2);
+//_n1 = noise.octave(4,i*_scale*.00001,j*_scale*.00001,.5,2);
 
     if(_n < .5) {
         _type = WATER;
-        _elevation = (_n*_scale)-5;
+        _elevation = (_n*_scale)-15;
+        _elevation_reverse = (_n1*_scale);
         _c.setHsb(145,195,_n*255);
     } else {
         _type = LAND;
         _c.setHsb(0,0,45);
         _elevation =  _n * _scale;
-
-        if(_n1 > .95) {
-            _type = TEST;
-        } 
+        //if(_n1 > .75) {
+          //  _type = TEST;
+        //} 
     }
 }
+
+void ofApp::system_info() {
+
+string fps = "FPS: " + ofToString(ofGetFrameRate(),2);
+font.drawString(fps,15,15);
+
+} 
 
 void ofApp::keyPressed(int key) {
 
     if(key == 'i') {
-    //string fps = "FPS: " + ofToString(ofGetFrameRate(),2);
-    //ofDrawBitmapString(fps,10,10);
+    _draw_sys_info = true;
+    ++_draw_sys_count;
+    }
+    if(_draw_sys_count > 1) {
+    _draw_sys_info = false;
+    _draw_sys_count = 0;
     }
 
     if(key == 'r') {
     _tile_boxes.clear();
     _tile_box_color.clear();
     _boxes.clear();
-    //map_init();
     }
 
 }
 
 void ofApp::keyReleased(int key) {
+
+    if(key == 'i' && _draw_sys_count > 0) {
+    
+    //_draw_sys_info = false;
+    //_draw_sys_count = 0;
+    }
 
     if(key == 'r') {
          _r = ofRandom(4000000);
@@ -100,27 +108,35 @@ void ofApp::keyReleased(int key) {
     //}
 //}
 
-//void ofApp::mouseMoved(int x,int y) {
+void ofApp::mouseMoved(int x,int y) {
 
 //mouse.x = _x;
 //mouse.y = _y;
 
-//}
+}
 
 void ofApp::draw() {
 
 glEnable(GL_DEPTH_TEST); 
 ofSetSmoothLighting(true);
-//orb.draw();
+
+if(_draw_sys_info == true) {
+system_info();
+}
+
 cam.begin();
 
 orb.draw();
-//_light.enable();
 
     for(unsigned int i = 0; i < _tile_boxes.size(); ++i) {
         ofSetColor(_tile_box_color[i]);
         _tile_boxes[i]->draw();
     }
+
+    for(unsigned int i = 0; i < _cave_boxes.size(); ++i) {
+        ofSetColor(_cave_box_color[i]);
+        _cave_boxes[i]->draw();
+    } 
 
     for(unsigned int i = 0; i < _boxes.size(); ++i) {
         ofSetColor(ofColor(100,100,100));
@@ -149,7 +165,18 @@ void ofApp::map_init() {
         _tile_box->setProperties(.25,.75);
         _tile_box->add();
         _tile_boxes.push_back(_tile_box);
-         
+       
+        if(_type == WATER) { 
+
+        _cave_box_color.push_back(_c);
+        shared_ptr <ofxBulletBox> _cave_box(new ofxBulletBox());
+        _cave_box->setProperties(.25,.75);
+        _cave_box->create(world.world,ofVec3f(i,-(_elevation/2)-(_elevation_reverse/2),j),0,_tile_width,-_elevation_reverse,_tile_width);       
+        _cave_box->add();
+        _cave_boxes.push_back(_cave_box);
+        
+        }    
+
         if(_type == TEST) {
             shared_ptr <ofxBulletBox> _box(new ofxBulletBox());
             _box->create(world.world,ofVec3f(i,_elevation/2,j),.5,_tile_width,4,_tile_width);
