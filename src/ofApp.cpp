@@ -11,15 +11,21 @@ font.load("arial.ttf",10);
 
 _elevation = 0;
 _elevation_reverse = 0;
-    
-_r = ofRandom(0,4000000);
-_scale = ofRandom(100,195);
+
+_cave_height = 0;
+
+_r = 1000000;   
+//_r = ofRandom(0,4000000);   
+_r2 = ofRandom(0,_r);
+
+//_scale = ofRandom(100,195);
+_scale = 150;
 _map_width = 256;
 _tile_width = 4;
 _steps = _map_width / _tile_width;
 _total_tiles = _steps * _steps;
 
-ofBackground(155);
+ofBackground(0);
 
 ofSeedRandom();
 
@@ -30,34 +36,25 @@ cam.removeInteraction(ofEasyCam::TransformType::TRANSFORM_ROTATE,OF_MOUSE_BUTTON
 cam.removeInteraction(ofEasyCam::TransformType::TRANSFORM_TRANSLATE_Z,OF_MOUSE_BUTTON_RIGHT);
 cam.addInteraction(ofEasyCam::TransformType::TRANSFORM_ROTATE,OF_MOUSE_BUTTON_RIGHT);
 
-orb.setup();
+//orb.setup();
 
-world.setup();
-world.setGravity(ofVec3f(0,-.9,0));
-world.enableGrabbing();
-world.setCamera(&cam);
+//lp.loc(128,,_elevation/2,128);
+//lp.wh(4,4);
+//lp.setup();
+
+//world.setup();
+//world.setGravity(ofVec3f(0,-.9,0));
+//world.enableGrabbing();
+//world.setCamera(&cam);
 
 map_init();
-}
 
-void ofApp::tileType(float i,float j) {
+orb.setup();
+ico.setup();
+//lp.loc(ofVec3f(128,65,128));
+//lp.wh(4,4);
+//lp.setup();
 
-//_n = noise.octave(4,i*_scale*.00001,j*_scale*.00001,.5,2);
-//_n1 = noise.octave(4,i*_scale*.00001,j*_scale*.00001,.5,2);
-
-    if(_n < .5) {
-        _type = WATER;
-        _elevation = (_n*_scale)-15;
-        _elevation_reverse = (_n1*_scale);
-        _c.setHsb(145,195,_n*255);
-    } else {
-        _type = LAND;
-        _c.setHsb(0,0,45);
-        _elevation =  _n * _scale;
-        //if(_n1 > .75) {
-          //  _type = TEST;
-        //} 
-    }
 }
 
 void ofApp::system_info() {
@@ -79,9 +76,12 @@ void ofApp::keyPressed(int key) {
     }
 
     if(key == 'r') {
-    _tile_boxes.clear();
-    _tile_box_color.clear();
-    _boxes.clear();
+    
+    //_tile_boxes.clear();
+    //_tile_box_color.clear();
+    //_boxes.clear();
+    //_cave_box_color.clear();
+    //_cave_boxes.clear();
     }
 
 }
@@ -127,20 +127,25 @@ system_info();
 cam.begin();
 
 orb.draw();
+ico.draw();
 
-    for(unsigned int i = 0; i < _tile_boxes.size(); ++i) {
-        ofSetColor(_tile_box_color[i]);
-        _tile_boxes[i]->draw();
-    }
+//lp.draw();
 
-    for(unsigned int i = 0; i < _cave_boxes.size(); ++i) {
-        ofSetColor(_cave_box_color[i]);
-        _cave_boxes[i]->draw();
-    } 
+    //for(unsigned int i = 0; i < _tile_boxes.size(); ++i) {
+        //ofSetColor(_tile_box_color[i]);
+        //_tile_boxes[i]->draw();
+        //_tile_boxes_mesh[i]->getMesh();
+    //}
 
-    for(unsigned int i = 0; i < _boxes.size(); ++i) {
-        ofSetColor(ofColor(100,100,100));
-        _boxes[i]->draw();
+    //for(unsigned int i = 0; i < _cave_boxes.size(); ++i) {
+        //ofSetColor(_cave_box_color[i]);
+        //ofSetColor(ofColor(100,100,100));
+        //_cave_boxes[i]->draw();
+    //} 
+
+    for(unsigned int i = 0; i < boxes.size(); ++i) {
+        //ofSetColor(ofColor(100,100,100));
+        boxes[i].draw();
     }
     
 
@@ -148,42 +153,63 @@ cam.end();
 }
 
 void ofApp::update() {
-world.update();
+//world.update();
 orb.update();
+ico.update();
+//lp.update();
 }
 
 void ofApp::map_init() {
 
-    for( int i = -(_map_width/2); i <= _map_width/2; i+= _tile_width) {
-        for( int j = -(_map_width/2); j <= _map_width/2; j+= _tile_width) {  
-        tileType(i+_r,j+_r);
- 
-        _tile_box_color.push_back(_c);
-    
-        shared_ptr <ofxBulletBox> _tile_box(new ofxBulletBox());
-        _tile_box->create(world.world,ofVec3f(i,0,j),0,_tile_width,_elevation,_tile_width);
-        _tile_box->setProperties(.25,.75);
-        _tile_box->add();
-        _tile_boxes.push_back(_tile_box);
-       
-        if(_type == WATER) { 
-
-        _cave_box_color.push_back(_c);
-        shared_ptr <ofxBulletBox> _cave_box(new ofxBulletBox());
-        _cave_box->setProperties(.25,.75);
-        _cave_box->create(world.world,ofVec3f(i,-(_elevation/2)-(_elevation_reverse/2),j),0,_tile_width,-_elevation_reverse,_tile_width);       
-        _cave_box->add();
-        _cave_boxes.push_back(_cave_box);
-        
-        }    
-
-        if(_type == TEST) {
-            shared_ptr <ofxBulletBox> _box(new ofxBulletBox());
-            _box->create(world.world,ofVec3f(i,_elevation/2,j),.5,_tile_width,4,_tile_width);
-            _box->add();
-    
-            _boxes.push_back(_box);
+    for( int i = -(_map_width/2) ; i <= _map_width/2; i+= _tile_width) {
+        for( int j = -(_map_width/2) ; j <= _map_width/2; j+= _tile_width) {  
+               
+        _n =  (  noise.octave(4,(i+_r)*_scale*0.00001,(j+_r)*_scale*0.00001,.5,2) ) ;
+        _n2 =  noise2.octave(4,(i+_r2)*(_scale)*0.00001,(j+_r2)*(_scale)*0.00001,.5,2) ;
+        _elevation_reverse = _n2*(_scale);
+        if(_n < .35) {
+        _c.setHsb(105,100,200);
+        _elevation = _n*_scale;
+        } else {
+        _c.setHsb(0,0,_n*255);
+        _elevation = _n*_scale;
         }
+        
+        box.set(i,_elevation/2,j,_tile_width,_elevation,_tile_width);
+        boxes.push_back(box);
+        
+        //_cave_height = 1;      
+
+        //_tile_box_color.push_back(_c);
+    
+        //shared_ptr <ofxBulletBox> _tile_box(new ofxBulletBox());
+        //_tile_box->create(world.world,ofVec3f(i,_elevation/2,j),0,_tile_width,_elevation,_tile_width);
+
+        //_tile_box->setProperties(.25,.75);
+        //_tile_box->add();
+        //_tile_boxes.push_back(_tile_box);
+        
+        //_cave_box_color.push_back(_c);
+        //shared_ptr <ofxBulletBox> _cave_box(new ofxBulletBox());
+        //_cave_box->setProperties(.25,.75);
+        //_cave_box->create(world.world,ofVec3f(i,(-_elevation_reverse/2),j),0,_tile_width,_elevation_reverse+_cave_height,_tile_width);       
+        //_cave_box->add();
+        //_cave_boxes.push_back(_cave_box);
+        
+
+        //if(_type == TEST) {
+            //_elevation_dist = ofDist(i,-_scale+(_elevation/2),j,i,(_elevation_reverse),j);
+            //cout << "i: " << i << endl;
+            //cout << "j: " << j << endl;
+            //cout << "elevation - :" << _elevation_reverse/2 << endl;
+            //cout << "elevation + :" << _elevation/2 << endl;
+            //cout <<  (_elevation_dist) << endl;
+            //shared_ptr <ofxBulletBox> _box(new ofxBulletBox());
+            //_box->create(world.world,ofVec3f(i,0,j),0,_tile_width,_cave_height,_tile_width);
+            //_box->add();
+    
+            //_boxes.push_back(_box);
+         //}
 }
 }
 

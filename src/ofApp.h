@@ -5,8 +5,12 @@
 #include "feature.h"
 #include "Noise.h"
 #include "Orbiter.h"
+#include "Icosphere.h"
+#include "Lightpanel.h"
 
-#include "ofxBullet.h"
+#include "ofxRay.h"
+
+//#include "ofxBullet.h"
 
 class ofApp : public ofBaseApp {
 
@@ -15,8 +19,13 @@ public:
 ofEasyCam cam;
 ofPoint mouse;
 
-Orbiter orb;
+Noise noise3;
+Noise noise2;
 Noise noise;
+
+Orbiter orb;
+Lightpanel lp;
+Icosphere ico;
 
 void draw(); 
 void update();
@@ -33,6 +42,9 @@ void map_init();
 
 Feature _type;
 
+vector <ofBoxPrimitive> boxes;
+ofBoxPrimitive box;
+
 int _tile_width;
 
 float _hue;
@@ -42,10 +54,18 @@ float _h;
 
 float _elevation;
 float _elevation_reverse;
+float _elevation_dist;
+
 float _n;
-float _n1;
+float _n2;
+float _n3;
 float _scale;
+
+float _cave_height;
+
 float _r;
+float _r2;
+float _r3;
 
 int _total_tiles;
 ofColor _c;
@@ -56,15 +76,15 @@ ofTrueTypeFont font;
 bool _draw_sys_info;
 int _draw_sys_count;
 
-ofxBulletWorldRigid world;
+//ofxBulletWorldRigid world;
 
-vector <ofColor> _tile_box_color;
-vector <shared_ptr <ofxBulletRigidBody>> _tile_boxes;
+//vector <ofColor> _tile_box_color;
+//vector <shared_ptr <ofxBulletRigidBody>> _tile_boxes;
 
-vector <ofColor> _cave_box_color;
-vector <shared_ptr <ofxBulletRigidBody>> _cave_boxes;
+//vector <ofColor> _cave_box_color;
+//vector <shared_ptr <ofxBulletRigidBody>> _cave_boxes;
 
-vector <shared_ptr <ofxBulletRigidBody>> _boxes;
+//vector <shared_ptr <ofxBulletRigidBody>> _boxes;
 
 float _map_width;
 float _start_timer;

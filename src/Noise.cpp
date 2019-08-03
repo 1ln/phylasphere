@@ -3,6 +3,7 @@
 Noise::Noise() {
 _freq = 1;
 _amp = 1;
+_total_amp = 0;
 _result = 0;
 } 
 
@@ -13,12 +14,17 @@ _amp = 1;
 _result = 0;
 
 for(int i = 0; i < octaves; ++i) { 
-_result += ofSignedNoise(x*_freq,y*_freq) * _amp;
+
+_result += ofNoise(x*_freq,y*_freq) * _amp;
 _amp *= p;
 _freq *= l;
+//_total_amp += _amp;
 
 }
-//cout << _result << endl;
+//cout << "result" << _result << endl;
 //_result = ofNormalize(_result,0,1);
-return abs(_result); 
+_result = ofMap(_result,0,1.5,0,1);
+//_result /= _total_amp;
+return (_result);
+
 }

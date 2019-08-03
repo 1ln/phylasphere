@@ -15,6 +15,7 @@ private:
 float _result;
 float _freq;
 float _amp;
+float _total_amp;
 
 };
 
