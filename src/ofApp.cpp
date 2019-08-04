@@ -142,10 +142,10 @@ ico.draw();
         //ofSetColor(ofColor(100,100,100));
         //_cave_boxes[i]->draw();
     //} 
-
-    for(unsigned int i = 0; i < boxes.size(); ++i) {
-        //ofSetColor(ofColor(100,100,100));
-        boxes[i].draw();
+cout << boxes_mesh.size() << endl;
+    for(unsigned int i = 0; i < boxes_mesh.size(); ++i) {
+        ofSetColor(ofColor(100,100,100));
+        boxes_mesh[i].draw();
     }
     
 
@@ -169,13 +169,17 @@ void ofApp::map_init() {
         _elevation_reverse = _n2*(_scale);
         if(_n < .35) {
         _c.setHsb(105,100,200);
-        _elevation = _n*_scale;
+        _elevation = 0;
         } else {
         _c.setHsb(0,0,_n*255);
         _elevation = _n*_scale;
         }
         
-        box.set(i,_elevation/2,j,_tile_width,_elevation,_tile_width);
+        box.set(_tile_width,_elevation,_tile_width);
+        box.setPosition(i,_elevation/2,j);
+        //box_mesh = box.getMesh();
+        //vector<ofMesh> box_mesh = box.getMesh();
+        boxes_mesh.push_back(box.getMesh());
         boxes.push_back(box);
         
         //_cave_height = 1;      

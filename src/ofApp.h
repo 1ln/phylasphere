@@ -45,6 +45,9 @@ Feature _type;
 vector <ofBoxPrimitive> boxes;
 ofBoxPrimitive box;
 
+//ofMesh box_mesh;
+vector <ofMesh> boxes_mesh;
+
 int _tile_width;
 
 float _hue;
