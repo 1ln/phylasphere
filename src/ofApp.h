@@ -19,6 +19,8 @@ public:
 ofEasyCam cam;
 ofPoint mouse;
 
+ofShader shader;
+
 Noise noise3;
 Noise noise2;
 Noise noise;

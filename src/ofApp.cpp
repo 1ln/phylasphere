@@ -36,7 +36,7 @@ cam.removeInteraction(ofEasyCam::TransformType::TRANSFORM_ROTATE,OF_MOUSE_BUTTON
 cam.removeInteraction(ofEasyCam::TransformType::TRANSFORM_TRANSLATE_Z,OF_MOUSE_BUTTON_RIGHT);
 cam.addInteraction(ofEasyCam::TransformType::TRANSFORM_ROTATE,OF_MOUSE_BUTTON_RIGHT);
 
-//orb.setup();
+shader.load("render.vert");
 
 //lp.loc(128,,_elevation/2,128);
 //lp.wh(4,4);
@@ -54,6 +54,8 @@ ico.setup();
 //lp.loc(ofVec3f(128,65,128));
 //lp.wh(4,4);
 //lp.setup();
+
+
 
 }
 
@@ -124,10 +126,10 @@ if(_draw_sys_info == true) {
 system_info();
 }
 
-cam.begin();
+//cam.begin();
 
-orb.draw();
-ico.draw();
+//orb.draw();
+//ico.draw();
 
 //lp.draw();
 
@@ -142,20 +144,22 @@ ico.draw();
         //ofSetColor(ofColor(100,100,100));
         //_cave_boxes[i]->draw();
     //} 
-cout << boxes_mesh.size() << endl;
     for(unsigned int i = 0; i < boxes_mesh.size(); ++i) {
         ofSetColor(ofColor(100,100,100));
-        boxes_mesh[i].draw();
+        //boxes_mesh[i].draw();
     }
-    
 
-cam.end();
+shader.begin();
+ofRectangle(0,0,_w,_h);
+shader.end();   
+
+//cam.end();
 }
 
 void ofApp::update() {
 //world.update();
-orb.update();
-ico.update();
+//orb.update();
+//ico.update();
 //lp.update();
 }
 
