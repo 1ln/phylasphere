@@ -10,8 +10,6 @@
 
 #include "ofxRay.h"
 
-//#include "ofxBullet.h"
-
 class ofApp : public ofBaseApp {
 
 public:
@@ -44,11 +42,12 @@ void map_init();
 
 Feature _type;
 
-vector <ofBoxPrimitive> boxes;
-ofBoxPrimitive box;
+vector <ofBoxPrimitive> boxes_layer1;
+vector <ofBoxPrimitive> boxes_layer2;
+ofBoxPrimitive box1;
+ofBoxPrimitive box2;
 
-//ofMesh box_mesh;
-vector <ofMesh> boxes_mesh;
+vector <ofColor> box_color;
 
 int _tile_width;
 
@@ -80,16 +79,6 @@ float _steps;
 ofTrueTypeFont font;
 bool _draw_sys_info;
 int _draw_sys_count;
-
-//ofxBulletWorldRigid world;
-
-//vector <ofColor> _tile_box_color;
-//vector <shared_ptr <ofxBulletRigidBody>> _tile_boxes;
-
-//vector <ofColor> _cave_box_color;
-//vector <shared_ptr <ofxBulletRigidBody>> _cave_boxes;
-
-//vector <shared_ptr <ofxBulletRigidBody>> _boxes;
 
 float _map_width;
 float _start_timer;

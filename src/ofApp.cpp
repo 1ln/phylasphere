@@ -36,16 +36,11 @@ cam.removeInteraction(ofEasyCam::TransformType::TRANSFORM_ROTATE,OF_MOUSE_BUTTON
 cam.removeInteraction(ofEasyCam::TransformType::TRANSFORM_TRANSLATE_Z,OF_MOUSE_BUTTON_RIGHT);
 cam.addInteraction(ofEasyCam::TransformType::TRANSFORM_ROTATE,OF_MOUSE_BUTTON_RIGHT);
 
-shader.load("render.vert");
+//shader.load("data/render.vert","data/render.frag");
 
 //lp.loc(128,,_elevation/2,128);
 //lp.wh(4,4);
 //lp.setup();
-
-//world.setup();
-//world.setGravity(ofVec3f(0,-.9,0));
-//world.enableGrabbing();
-//world.setCamera(&cam);
 
 map_init();
 
@@ -120,46 +115,40 @@ void ofApp::mouseMoved(int x,int y) {
 void ofApp::draw() {
 
 glEnable(GL_DEPTH_TEST); 
-ofSetSmoothLighting(true);
+//ofSetSmoothLighting(true);
 
 if(_draw_sys_info == true) {
 system_info();
 }
 
-//cam.begin();
+cam.begin();
 
-//orb.draw();
-//ico.draw();
+orb.draw();
+ico.draw();
 
 //lp.draw();
 
-    //for(unsigned int i = 0; i < _tile_boxes.size(); ++i) {
-        //ofSetColor(_tile_box_color[i]);
-        //_tile_boxes[i]->draw();
-        //_tile_boxes_mesh[i]->getMesh();
-    //}
-
-    //for(unsigned int i = 0; i < _cave_boxes.size(); ++i) {
-        //ofSetColor(_cave_box_color[i]);
-        //ofSetColor(ofColor(100,100,100));
-        //_cave_boxes[i]->draw();
-    //} 
-    for(unsigned int i = 0; i < boxes_mesh.size(); ++i) {
+    for(unsigned int i = 0; i < boxes_layer1.size(); ++i) {
+        ofSetColor(box_color[i]);
+        boxes_layer1[i].draw();
+    }
+     
+    for(unsigned int i = 0; i < boxes_layer2.size(); ++i) {
         ofSetColor(ofColor(100,100,100));
-        //boxes_mesh[i].draw();
+        boxes_layer2[i].draw();
     }
 
-shader.begin();
-ofRectangle(0,0,_w,_h);
-shader.end();   
+//shader.begin();
+//ofDrawRectangle(0,0,_w/2,_h/2);
+//shader.end();   
 
-//cam.end();
+cam.end();
 }
 
 void ofApp::update() {
-//world.update();
-//orb.update();
-//ico.update();
+
+orb.update();
+ico.update();
 //lp.update();
 }
 
@@ -179,56 +168,17 @@ void ofApp::map_init() {
         _elevation = _n*_scale;
         }
         
-        box.set(_tile_width,_elevation,_tile_width);
-        box.setPosition(i,_elevation/2,j);
-        //box_mesh = box.getMesh();
-        //vector<ofMesh> box_mesh = box.getMesh();
-        boxes_mesh.push_back(box.getMesh());
-        boxes.push_back(box);
+        box_color.push_back(_c);
+        box1.set(_tile_width,_elevation,_tile_width);
+        box2.set(_tile_width,_elevation/2,_tile_width);
+        box1.setPosition(i,_elevation/2,j);
+        box2.setPosition(i,_elevation/2,j);
+        boxes_layer1.push_back(box1);
+        boxes_layer2.push_back(box2);
         
-        //_cave_height = 1;      
-
-        //_tile_box_color.push_back(_c);
     
-        //shared_ptr <ofxBulletBox> _tile_box(new ofxBulletBox());
-        //_tile_box->create(world.world,ofVec3f(i,_elevation/2,j),0,_tile_width,_elevation,_tile_width);
-
-        //_tile_box->setProperties(.25,.75);
-        //_tile_box->add();
-        //_tile_boxes.push_back(_tile_box);
-        
-        //_cave_box_color.push_back(_c);
-        //shared_ptr <ofxBulletBox> _cave_box(new ofxBulletBox());
-        //_cave_box->setProperties(.25,.75);
-        //_cave_box->create(world.world,ofVec3f(i,(-_elevation_reverse/2),j),0,_tile_width,_elevation_reverse+_cave_height,_tile_width);       
-        //_cave_box->add();
-        //_cave_boxes.push_back(_cave_box);
-        
-
-        //if(_type == TEST) {
-            //_elevation_dist = ofDist(i,-_scale+(_elevation/2),j,i,(_elevation_reverse),j);
-            //cout << "i: " << i << endl;
-            //cout << "j: " << j << endl;
-            //cout << "elevation - :" << _elevation_reverse/2 << endl;
-            //cout << "elevation + :" << _elevation/2 << endl;
-            //cout <<  (_elevation_dist) << endl;
-            //shared_ptr <ofxBulletBox> _box(new ofxBulletBox());
-            //_box->create(world.world,ofVec3f(i,0,j),0,_tile_width,_cave_height,_tile_width);
-            //_box->add();
-    
-            //_boxes.push_back(_box);
-         //}
 }
 }
-
-        //_spotlight.setPosition(_tile_boxes[((_total_tiles-_steps)/2)].getX(),_tile_boxes[((_total_tiles-_steps)/2)].getY(),175);
-    //} else {
-        //plane.setPosition(_map_width/2,_map_width/2,0);
-    //}
-//_spotlight.lookAt(ofVec3f(ofMap(ofNoise(_spotlight_x),0,1,_x_width-_map_width,_x_width),ofMap(ofNoise(_spotlight_y),0,1,0,_map_width),0));
-
-//_spotlight_x += 0.005;
-//_spotlight_y += 0.005;
 
 
 
