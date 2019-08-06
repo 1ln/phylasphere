@@ -124,7 +124,7 @@ system_info();
 cam.begin();
 
 orb.draw();
-ico.draw();
+//ico.draw();
 
 //lp.draw();
 
@@ -160,19 +160,19 @@ void ofApp::map_init() {
         _n =  (  noise.octave(4,(i+_r)*_scale*0.00001,(j+_r)*_scale*0.00001,.5,2) ) ;
         _n2 =  noise2.octave(4,(i+_r2)*(_scale)*0.00001,(j+_r2)*(_scale)*0.00001,.5,2) ;
         _elevation_reverse = _n2*(_scale);
-        if(_n < .35) {
-        _c.setHsb(105,100,200);
-        _elevation = 0;
-        } else {
+        //if(_n < .35) {
+        //_c.setHsb(105,100,200);
+        //_elevation = 0;
+        //} else {
         _c.setHsb(0,0,_n*255);
         _elevation = _n*_scale;
-        }
+        //}
         
         box_color.push_back(_c);
         box1.set(_tile_width,_elevation,_tile_width);
         box2.set(_tile_width,_elevation/2,_tile_width);
         box1.setPosition(i,_elevation/2,j);
-        box2.setPosition(i,_elevation/2,j);
+        box2.setPosition(i,-_elevation_reverse/2,j);
         boxes_layer1.push_back(box1);
         boxes_layer2.push_back(box2);
         

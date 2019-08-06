@@ -49,6 +49,8 @@ ofBoxPrimitive box2;
 
 vector <ofColor> box_color;
 
+ofMaterial mat;
+
 int _tile_width;
 
 float _hue;
