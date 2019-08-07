@@ -17,13 +17,13 @@ public:
 ofEasyCam cam;
 ofPoint mouse;
 
-ofShader shader;
+Noise noise1;
+Noise noise0;
 
-Noise noise3;
-Noise noise2;
-Noise noise;
+Orbiter orb0;
+Orbiter orb1;
+Orbiter orb2;
 
-Orbiter orb;
 Lightpanel lp;
 Icosphere ico;
 
@@ -42,10 +42,12 @@ void map_init();
 
 Feature _type;
 
+vector <Orbiter> orbs;
+
+vector <ofBoxPrimitive> boxes_layer0;
 vector <ofBoxPrimitive> boxes_layer1;
-vector <ofBoxPrimitive> boxes_layer2;
+ofBoxPrimitive box0;
 ofBoxPrimitive box1;
-ofBoxPrimitive box2;
 
 vector <ofColor> box_color;
 
@@ -58,16 +60,12 @@ float _hue;
 float _w;
 float _h;
 
-float _elevation;
-float _elevation_reverse;
-float _elevation_dist;
+float _elevation_l0;
+float _elevation_l1;
 
-float _n;
-float _n2;
-float _n3;
+float _n0;
+float _n1;
 float _scale;
-
-float _cave_height;
 
 float _r;
 float _r2;
@@ -75,7 +73,6 @@ float _r3;
 
 int _total_tiles;
 ofColor _c;
-ofColor _land;
 float _steps;
 
 ofTrueTypeFont font;

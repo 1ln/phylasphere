@@ -5,11 +5,12 @@ _x = 0;
 _y = 0;
 _cx = 0;
 _cy = 0;
-_r = 550;
+_r = 250;
+_s = 0.001;
 _a = ofRandom(0,TWO_PI);
 }
 
-void Orbiter::rotationalCenter(float cx,float cy) {
+void Orbiter::center(float cx,float cy) {
 _cx = cx;
 _cy = cy;
 }
@@ -23,7 +24,13 @@ _r = r;
 }
 
 void Orbiter::setup(){
+
 _light.setPointLight();
+
+_light.setDiffuseColor(ofFloatColor(.01,.01,.085,1));
+_light.setSpecularColor(ofFloatColor(1.0,1.0,1.0));
+//_light.setAttenuation(.001,.001,1);
+
 }
 
 void Orbiter::draw() {
@@ -32,7 +39,7 @@ _light.draw();
 }
 
 void Orbiter::update() {
-_a += 0.001;
+_a += _s;
 _x = _cx + cos(_a) * _r;
 _y = _cy + sin(_a) * _r;
 

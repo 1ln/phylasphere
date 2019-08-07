@@ -10,7 +10,7 @@ Orbiter();
 
 void radius(float r);
 void speed(float s);
-void rotationalCenter(float cx, float cy);
+void center(float cx, float cy);
 
 void setup();
 void update();
@@ -18,10 +18,11 @@ void draw();
 
 private:
 
+ofLight _light;
+
 float _s;
 float _a;
 float _r;
-ofLight _light;
 float _cx;
 float _cy;
 float _x;
