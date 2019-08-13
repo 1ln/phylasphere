@@ -2,11 +2,14 @@
 #define _Star
 
 #include "ofMain.h"
+#include "Planet.h"
 
 class Star {
 
 public:
 Star();
+
+Planet planet;
 
 void setup();
 void draw();
@@ -16,6 +19,7 @@ void radius(float r);
 private:
 
 ofIcoSpherePrimitive ico;
+ofLight light;
 
 float _r;
 
