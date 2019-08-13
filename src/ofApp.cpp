@@ -2,26 +2,26 @@
 
 void ofApp::setup() {
 
-_w = ofGetWidth();
-_h = ofGetHeight();
+//_w = ofGetWidth();
+//_h = ofGetHeight();
 
 _draw_sys_info = false;
 _draw_sys_count = 0;
 font.load("arial.ttf",10);
 
-_elevation_l0 = 0;
-_elevation_l1 = 0;
+//_elevation_l0 = 0;
+//_elevation_l1 = 0;
 
 //_r = 1000000;   
-_r = ofRandom(0,4000000);   
-_r2 = ofRandom(0,_r);
+//_r = ofRandom(0,4000000);   
+//_r2 = ofRandom(0,_r);
 
 //_scale = ofRandom(100,195);
-_scale = 150;
-_map_width = 256;
-_tile_width = 4;
-_steps = _map_width / _tile_width;
-_total_tiles = _steps * _steps;
+//_scale = 150;
+//_map_width = 256;
+//_tile_width = 4;
+//_steps = _map_width / _tile_width;
+//_total_tiles = _steps * _steps;
 
 ofBackground(0);
 
@@ -34,36 +34,24 @@ cam.removeInteraction(ofEasyCam::TransformType::TRANSFORM_ROTATE,OF_MOUSE_BUTTON
 cam.removeInteraction(ofEasyCam::TransformType::TRANSFORM_TRANSLATE_Z,OF_MOUSE_BUTTON_RIGHT);
 cam.addInteraction(ofEasyCam::TransformType::TRANSFORM_ROTATE,OF_MOUSE_BUTTON_RIGHT);
 
-//lp.loc(128,,_elevation/2,128);
 //lp.wh(4,4);
-//lp.setup();
 
-map_init();
+//map_init();
 
-for(unsigned int i = 0; i < 3; ++i) {
-orb.radius(ofRandom(200,250));
-orb.speed(ofRandom(0.001,0.005));
-orbs.push_back(orb);
-
-
-}
+//for(unsigned int i = 0; i < 3; ++i) {
+//orb.radius(ofRandom(200,250));
+//orb.speed(ofRandom(0.001,0.005));
+//orbs.push_back(orb);
 
 
-//orb0.radius(ofRandom(1000,3500));
-//orb1.radius(ofRandom(1000,3500));
-//orb2.radius(ofRandom(1000,3500));
-//orb0.setup();
-//orb1.setup();
-//orb2.setup();
+//} 
+star.setup();
 
 mat.setShininess(100);
 mat.setSpecularColor(ofColor(255,255,255,255));
 //mat.setEmissiveColor(ofColor(255,0,0));
-//lp.loc(ofVec3f(128,65,128));
-//lp.wh(4,4);
-//lp.setup();
 
-ofSetGlobalAmbientColor(ofColor(0,0,0));
+//ofSetGlobalAmbientColor(ofColor(0,0,0));
 
 }
 
@@ -87,11 +75,6 @@ void ofApp::keyPressed(int key) {
 
     if(key == 'r') {
     
-    //_tile_boxes.clear();
-    //_tile_box_color.clear();
-    //_boxes.clear();
-    //_cave_box_color.clear();
-    //_cave_boxes.clear();
     }
 
 }
@@ -130,28 +113,25 @@ system_info();
 
 cam.begin();
 
-//orb0.draw();
-//orb1.draw();
-//orb2.draw();
-//lp.draw();
-mat.begin();
+star.draw();
+//mat.begin();
     
     
-    for(unsigned int i = 0; i < orbs.size(); ++i) {
-        orbs[i].draw();
-    }
+    //for(unsigned int i = 0; i < orbs.size(); ++i) {
+        //orbs[i].draw();
+    //}
 
-    for(unsigned int i = 0; i < boxes_layer0.size(); ++i) {
-        ofSetColor(box_color[i]);
-        boxes_layer0[i].draw();
-    }
+    //for(unsigned int i = 0; i < boxes_layer0.size(); ++i) {
+        //ofSetColor(box_color[i]);
+        //boxes_layer0[i].draw();
+    //}
      
-    for(unsigned int i = 0; i < boxes_layer1.size(); ++i) {
-        ofSetColor(box_color[i]);
-        boxes_layer1[i].draw();
-    }
+    //for(unsigned int i = 0; i < boxes_layer1.size(); ++i) {
+        //ofSetColor(box_color[i]);
+        //boxes_layer1[i].draw();
+    //}
 
-mat.end();
+//mat.end();
 cam.end();
 
 //ofDisableLighting();
@@ -159,15 +139,12 @@ cam.end();
 
 void ofApp::update() {
 
-for(unsigned int i = 0; i < orbs.size(); ++i) {
-orbs[i].update();
+//for(unsigned int i = 0; i < orbs.size(); ++i) {
+//orbs[i].update();
+//}
+star.update();
 }
-//orb0.update();
-//orb1.update();
-//orb2.update();
-//lp.update();
-}
-
+/*
 void ofApp::map_init() {
 
     for( int i = -(_map_width/2) ; i <= _map_width/2; i+= _tile_width) {
@@ -191,7 +168,7 @@ void ofApp::map_init() {
     
 }
 }
-
+*/
 
 
 }
