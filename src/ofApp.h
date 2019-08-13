@@ -20,13 +20,12 @@ ofPoint mouse;
 Noise noise1;
 Noise noise0;
 
+Orbiter orb;
+
 Orbiter orb0;
 Orbiter orb1;
 Orbiter orb2;
-
-Lightpanel lp;
-Icosphere ico;
-
+ 
 void draw(); 
 void update();
 void setup();
@@ -39,8 +38,6 @@ void system_info();
 void input_deactivate();
 void tileType(float i,float j);
 void map_init();
-
-Feature _type;
 
 vector <Orbiter> orbs;
 

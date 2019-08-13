@@ -40,19 +40,21 @@ cam.addInteraction(ofEasyCam::TransformType::TRANSFORM_ROTATE,OF_MOUSE_BUTTON_RI
 
 map_init();
 
-//for(unsigned int i = 0; i < 3; ++i) {
-//orbs.push_back(orb);
+for(unsigned int i = 0; i < 3; ++i) {
+orb.radius(ofRandom(200,250));
+orb.speed(ofRandom(0.001,0.005));
+orbs.push_back(orb);
 
 
-//}
+}
 
 
-orb0.radius(ofRandom(1000,3500));
-orb1.radius(ofRandom(1000,3500));
-orb2.radius(ofRandom(1000,3500));
-orb0.setup();
-orb1.setup();
-orb2.setup();
+//orb0.radius(ofRandom(1000,3500));
+//orb1.radius(ofRandom(1000,3500));
+//orb2.radius(ofRandom(1000,3500));
+//orb0.setup();
+//orb1.setup();
+//orb2.setup();
 
 mat.setShininess(100);
 mat.setSpecularColor(ofColor(255,255,255,255));
@@ -61,7 +63,7 @@ mat.setSpecularColor(ofColor(255,255,255,255));
 //lp.wh(4,4);
 //lp.setup();
 
-ofSetGlobalAmbientColor(oddfColor(0,0,0));
+ofSetGlobalAmbientColor(ofColor(0,0,0));
 
 }
 
@@ -128,16 +130,16 @@ system_info();
 
 cam.begin();
 
-orb0.draw();
-orb1.draw();
-orb2.draw();
+//orb0.draw();
+//orb1.draw();
+//orb2.draw();
 //lp.draw();
 mat.begin();
     
     
-    //for(unsigned int i = 0; i < panels.size(); ++i) {
-        //panels[i].draw();
-    //}
+    for(unsigned int i = 0; i < orbs.size(); ++i) {
+        orbs[i].draw();
+    }
 
     for(unsigned int i = 0; i < boxes_layer0.size(); ++i) {
         ofSetColor(box_color[i]);
@@ -152,17 +154,17 @@ mat.begin();
 mat.end();
 cam.end();
 
-ofDisableLighting();
+//ofDisableLighting();
 }
 
 void ofApp::update() {
 
-//for(unsigned int i = 0; i < orbs.size(); ++i) {
-//orbs[i].update();
-//}
-orb0.update();
-orb1.update();
-orb2.update();
+for(unsigned int i = 0; i < orbs.size(); ++i) {
+orbs[i].update();
+}
+//orb0.update();
+//orb1.update();
+//orb2.update();
 //lp.update();
 }
 
