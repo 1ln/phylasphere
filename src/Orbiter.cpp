@@ -1,13 +1,11 @@
 #include "Orbiter.h"
 
 Orbiter::Orbiter() {
+
 _r = 0;
 _s = 0.001;
 _a = ofRandom(0,TWO_PI);
-}
 
-void Orbiter::center(ofVec3f c) {
-_c = c;
 }
 
 void Orbiter::speed(float s) {

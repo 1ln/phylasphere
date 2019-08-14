@@ -24,17 +24,17 @@ void Noise::persistance(float p) {
 _p = p;
 } 
 
-float Noise::octave(int octaves,float x,float p,float l) {
+float Noise::fb(float x) {
 
 _freq = 1;
 _amp = 1;
 _result = 0;
 
-for(int i = 0; i < octaves; ++i) { 
+for(int i = 0; i < _octaves; ++i) { 
 
     _result += ofNoise(x*_freq) * _amp;
-    _amp *= p;
-    _freq *= l;
+    _amp *= _p;
+    _freq *= _l;
 
 }
 
@@ -43,17 +43,17 @@ return _result;
 
 }
 
-float Noise::octave2d(int octaves,float x,float y,float p,float l) {
+float Noise::fb2(float x,float y) {
 
 _freq = 1;
 _amp = 1;
 _result = 0;
 
-for(int i = 0; i < octaves; ++i) { 
+for(int i = 0; i < _octaves; ++i) { 
 
     _result += ofNoise(x*_freq,y*_freq) * _amp;
-    _amp *= p;
-    _freq *= l;
+    _amp *= _p;
+    _freq *= _l;
 
 }
 
@@ -63,7 +63,7 @@ return _result;
 }
 
 
-float Noise::octave3d(float x,float y,float z) {
+float Noise::fb3(float x,float y,float z) {
 
 _freq = 1;
 _amp = 1;

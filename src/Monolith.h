@@ -44,4 +44,6 @@ float _orbital_radius;
 ofColor _c;
 float _steps;
 
+ofVec3f _p;
+
 };

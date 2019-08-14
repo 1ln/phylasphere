@@ -16,6 +16,7 @@ ico.set(_r,5);
 ico.setPosition(_p);
 
 planet.orbital_center(_p);
+planet.setup();
 
 }
 
@@ -29,6 +30,7 @@ planet.draw();
 }
 
 void Star::update() {
+planet.update();
 } 
 
 

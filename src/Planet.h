@@ -22,12 +22,13 @@ void setup();
 void update();
 void draw();
 
-of3dPrimitive ico;
+ofIcoSpherePrimitive ico;
 ofMesh mesh;
 ofColor c;
 
 private:
 
+float _n;
 float _r;
 ofVec3f _p;
 ofVec3f _orbital_center;

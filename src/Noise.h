@@ -12,9 +12,9 @@ void octaves(int octaves);
 void lacunarity(float l);
 void persistance(float p);
 
-float octave(int octaves,float x,float p,float l);
-float octave2d(int octaves,float x,float y,float p,float l);
-float octave3d(float x,float y,float z );
+float fb(float x);
+float fb2(float x,float y);
+float fb3(float x,float y,float z );
 
 private:
 

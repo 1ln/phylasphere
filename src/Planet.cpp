@@ -26,11 +26,12 @@ _orbital_center = c;
 
 void Planet::setup() {
 
-ico.set(_r,6);
+//ico.set(_r,6);
 
-ofVecf3 np = ofVec3f(ofRandom(0,1),ofRandom(0,1),ofRandom(0,1));
-np.normalize() * (_r+250);
+ofVec3f np = ofVec3f(ofRandom(0,1),ofRandom(0,1),ofRandom(0,1));
+np = np.normalize() * (_r+250);
 ico.setPosition(np);
+ico.set(_r,6);
 
 mesh = ico.getMesh();
 vector<glm::vec3> & vert = mesh.getVertices();
@@ -40,11 +41,11 @@ for(unsigned int i = 0; i < vert.size(); ++i) {
     ofVec3f v = vert.at(i);
     v.normalize();
 
-    n = noise.octave3d(v.x,v.y,v.z);
+    _n = noise.fb3(v.x,v.y,v.z);
 
-    mesh.setVertex(i,vert.at(i)+(v*n*35));    
+    mesh.setVertex(i,vert.at(i)+(v*_n*35));    
 
-    c.setHsb(n*128,128,255);
+    c.setHsb(_n*128,128,255);
     mesh.addColor(c);
 
 }
@@ -57,5 +58,5 @@ mesh.draw();
 }
 
 void Planet::update() {
-position(orb.rotate(_orbital_center,_p);
+//position(orb.rotate(_orbital_center,_p));
 }

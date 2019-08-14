@@ -17,11 +17,11 @@ ofBackground(0);
 mat.setShininess(100);
 mat.setSpecularColor(ofColor(255,255,255,255));
 
-    for( int i = p.x; i <= _num; i+= _step) {
-        for( int j = p.z; j <= _num; j+= _step) {  
+    for( int i = _p.x; i <= _num; i+= _step) {
+        for( int j =  _p.z; j <= _num; j+= _step) {  
                
-            _n0 =  noise0.octave2d((i+_r)*_scale*0.00001,(j+_r)*_scale*0.00001);
-            _n1 =  noise1.octave2d((i+_r2)*_scale*0.00001,(j+_r2)*_scale*0.00001);
+            _n0 =  noise0.fb2((i+_r)*_scale*0.00001,(j+_r)*_scale*0.00001);
+            _n1 =  noise1.fb2((i+_r2)*_scale*0.00001,(j+_r2)*_scale*0.00001);
         
             _elevation_l0 = _n0*(_scale);
             _elevation_l1 = _n1*(_scale);

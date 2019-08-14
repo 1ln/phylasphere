@@ -47,8 +47,8 @@ cam.addInteraction(ofEasyCam::TransformType::TRANSFORM_ROTATE,OF_MOUSE_BUTTON_RI
 //} 
 star.setup();
 
-mat.setShininess(100);
-mat.setSpecularColor(ofColor(255,255,255,255));
+//mat.setShininess(100);
+//mat.setSpecularColor(ofColor(255,255,255,255));
 //mat.setEmissiveColor(ofColor(255,0,0));
 
 //ofSetGlobalAmbientColor(ofColor(0,0,0));
@@ -169,6 +169,4 @@ void ofApp::map_init() {
 }
 }
 */
-
-
-}
+//}

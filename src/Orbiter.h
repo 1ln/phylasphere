@@ -10,6 +10,7 @@ Orbiter();
 
 void radius(float r);
 void speed(float s);
+void center(ofVec3f c);
 
 ofVec3f rotate(ofVec3f c,ofVec3f p);
 
