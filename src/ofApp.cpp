@@ -34,19 +34,12 @@ cam.removeInteraction(ofEasyCam::TransformType::TRANSFORM_ROTATE,OF_MOUSE_BUTTON
 cam.removeInteraction(ofEasyCam::TransformType::TRANSFORM_TRANSLATE_Z,OF_MOUSE_BUTTON_RIGHT);
 cam.addInteraction(ofEasyCam::TransformType::TRANSFORM_ROTATE,OF_MOUSE_BUTTON_RIGHT);
 
-//lp.wh(4,4);
-
-//map_init();
-
 //for(unsigned int i = 0; i < 3; ++i) {
-//orb.radius(ofRandom(200,250));
-//orb.speed(ofRandom(0.001,0.005));
 //orbs.push_back(orb);
-
 
 //} 
 star.setup();
-
+planet.setup();
 //mat.setShininess(100);
 //mat.setSpecularColor(ofColor(255,255,255,255));
 //mat.setEmissiveColor(ofColor(255,0,0));
@@ -114,8 +107,8 @@ system_info();
 cam.begin();
 
 star.draw();
+planet.draw();
 //mat.begin();
-    
     
     //for(unsigned int i = 0; i < orbs.size(); ++i) {
         //orbs[i].draw();
@@ -143,6 +136,7 @@ void ofApp::update() {
 //orbs[i].update();
 //}
 star.update();
+planet.update();
 }
 /*
 void ofApp::map_init() {

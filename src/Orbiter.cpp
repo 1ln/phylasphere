@@ -26,8 +26,9 @@ _r = r;
 
 ofVec3f Orbiter::rotate(ofVec3f c,ofVec3f p) {
 _a += _s;
-p.x = c.x + cos(_a) * _r;
-p.y = c.y + sin(_a) * _r;
-
+p.z = c.z + cos(_a) * _r;
+p.x = c.x + sin(_a) * _r;
+//cout << _a << endl;
+//cout << p << endl;
 return p;
 }

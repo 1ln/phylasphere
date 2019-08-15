@@ -4,7 +4,7 @@
 
 //#include "feature.h"
 //#include "Noise.h"
-//#include "Orbiter.h"
+#include "Planet.h"
 #include "Star.h"
 
 //#include "ofxRay.h"
@@ -19,6 +19,7 @@ ofPoint mouse;
 //Noise noise0;
 
 Star star;
+Planet planet;
  
 void draw(); 
 void update();

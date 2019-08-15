@@ -15,6 +15,7 @@ Noise noise;
 Orbiter orb;
 
 void radius(float r);
+void orbiting(ofNode n);
 void position(ofVec3f p);
 void orbital_center(ofVec3f c);
 
@@ -32,6 +33,7 @@ float _n;
 float _r;
 ofVec3f _p;
 ofVec3f _orbital_center;
+ofVec3f np;
 
 };
 
