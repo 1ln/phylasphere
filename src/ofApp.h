@@ -7,7 +7,7 @@
 #include "Planet.h"
 #include "Star.h"
 
-//#include "ofxRay.h"
+#include "ofxRay.h"
 
 class ofApp : public ofBaseApp {
 
@@ -40,14 +40,14 @@ void map_init();
 
 //vector <ofColor> box_color;
 
-//ofMaterial mat;
+ofVec3f center;
 
 //int _tile_width;
 
 //float _hue;
 
-//float _w;
-//float _h;
+float _x;
+float _y;
 
 //float _elevation_l0;
 //float _elevation_l1;

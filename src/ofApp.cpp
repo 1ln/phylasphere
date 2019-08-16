@@ -9,6 +9,8 @@ _draw_sys_info = false;
 _draw_sys_count = 0;
 font.load("arial.ttf",10);
 
+center = ofVec3f(0,0,0);
+
 //_elevation_l0 = 0;
 //_elevation_l1 = 0;
 
@@ -59,11 +61,14 @@ void ofApp::keyPressed(int key) {
 
     if(key == 'i') {
     _draw_sys_info = true;
+    //ofTranslate(planet.g_Position());
     ++_draw_sys_count;
     }
     if(_draw_sys_count > 1) {
     _draw_sys_info = false;
     _draw_sys_count = 0;
+    //cam.restoreTransformGL();
+
     }
 
     if(key == 'r') {
@@ -89,8 +94,8 @@ void ofApp::keyReleased(int key) {
 
 void ofApp::mouseMoved(int x,int y) {
 
-//mouse.x = _x;
-//mouse.y = _y;
+mouse.x = _x;
+mouse.y = _y;
 
 }
 
@@ -100,11 +105,25 @@ glEnable(GL_DEPTH_TEST);
 ofEnableLighting();
 ofSetSmoothLighting(true);
 
+//cam.begin();
+
 if(_draw_sys_info == true) {
-system_info();
+//system_info();
+
+ofTranslate(planet.g_Position());
+cam.setTarget(planet.g_Position());
+cam.lookAt(planet.g_Position());
+cam.begin();
+//planet.draw(); 
+} else {
+cam.setTarget(ofVec3f(0,0,0));
+cam.lookAt(ofVec3f(0,0,0));
+cam.begin();
 }
 
-cam.begin();
+//cam.begin();
+
+//ofTranslate(1000,1000);
 
 star.draw();
 planet.draw();

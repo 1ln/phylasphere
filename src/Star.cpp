@@ -23,7 +23,7 @@ ico.setPosition(_p);
 void Star::draw() {
 
 light.enable();
-//ico.drawWireframe();
+ico.drawWireframe();
 
 //planet.draw();
 

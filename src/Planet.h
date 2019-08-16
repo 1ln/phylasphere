@@ -16,7 +16,7 @@ Orbiter orb;
 
 void radius(float r);
 void orbiting(ofNode n);
-void position(ofVec3f p);
+ofVec3f g_Position();
 void orbital_center(ofVec3f c);
 
 void setup();

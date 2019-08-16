@@ -8,10 +8,9 @@ _orbital_center = ofVec3f(0,0,0);
 
 } 
 
-void Planet::position(ofVec3f p) {
+ofVec3f Planet::g_Position() {
 
-//np = p;
-
+return _p;
 }
 
 void Planet::radius(float r) { 
@@ -56,7 +55,7 @@ for(unsigned int i = 0; i < vert.size(); ++i) {
 }
 
      orb.radius(2000);
-     orb.speed(.001);
+     orb.speed(.00001);
      _p = orb.rotate(_orbital_center,_p) ;
 
 
