@@ -4,6 +4,7 @@
 #include "ofMain.h"
 #include "Noise.h"
 #include "Orbiter.h"
+#include "SignedDistance.h"
 
 class Planet {
 
@@ -11,6 +12,7 @@ public:
 
 Planet();
 
+SignedDistance dist;
 Noise noise;
 Orbiter orb;
 
@@ -18,6 +20,7 @@ void radius(float r);
 void orbiting(ofNode n);
 ofVec3f g_Position();
 void orbital_center(ofVec3f c);
+float intersect(ofVec3f p);
 
 void setup();
 void update();

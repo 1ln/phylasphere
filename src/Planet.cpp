@@ -19,6 +19,11 @@ _r = r;
 
 }
 
+float Planet::intersect(ofVec3f p) {
+float intersect = dist.sphere(p,_p,_r);
+return intersect;
+}
+
 void Planet::orbital_center(ofVec3f c) {
 _orbital_center = c;
 }
