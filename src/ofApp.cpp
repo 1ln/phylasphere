@@ -67,8 +67,8 @@ void ofApp::keyReleased(int key) {
 
 void ofApp::mouseMoved(int x,int y) {
 
-mouse.x = _x;
-mouse.y = _y;
+mouse.x = x;
+mouse.y = y;
 
 }
 
@@ -105,8 +105,13 @@ void ofApp::update() {
 
 w_mouse = cam.screenToWorld(ofVec3f(mouse.x,mouse.y,0.0f));
 w_mouse_end = cam.screenToWorld(ofVec3f(mouse.x,mouse.y,1.0f)); 
-//mouse_ray.s = w_mouse;
-//mouse_ray.t = w_mouse_end;
+mouse_transmission = w_mouse_end - w_mouse;
+mouse_ray.s = w_mouse;
+mouse_ray.t = mouse_transmission;
+cout << planet.intersect(ofVec3f(2000,0,0)) <<  "test" << endl;
+//cout << w_mouse << endl;
+cout << (mouse_ray.distanceTo(ofVec3f(0,0,0))-250) << endl;
+cout << (mouse_ray.distanceTo(ofVec3f(2000,0,0))-100) << endl;
 
 star.update();
 planet.update();

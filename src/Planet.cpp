@@ -61,7 +61,7 @@ for(unsigned int i = 0; i < vert.size(); ++i) {
 
      orb.radius(2000);
      orb.speed(.00001);
-     _p = orb.rotate(_orbital_center,_p) ;
+     //_p = orb.rotate(_orbital_center,_p) ;
 
 
 }
