@@ -9,7 +9,6 @@ _draw_sys_info = false;
 _draw_sys_count = 0;
 font.load("arial.ttf",10);
 
-
 //_r = 1000000;   
 //_r = ofRandom(0,4000000);   
 //_r2 = ofRandom(0,_r);
@@ -27,7 +26,8 @@ cam.addInteraction(ofEasyCam::TransformType::TRANSFORM_ROTATE,OF_MOUSE_BUTTON_RI
 
 star.setup();
 planet.setup();
-//ofSetGlobalAmbientColor(ofColor(0,0,0));
+
+ofSetGlobalAmbientColor(ofColor(0,0,0));
 
 }
 
@@ -56,15 +56,6 @@ void ofApp::keyPressed(int key) {
 
 }
 
-void ofApp::keyReleased(int key) {
-
-    if(key == 'i' && _draw_sys_count > 0) {
-    }
-
-    if(key == 'r') {
-    }
-} 
-
 void ofApp::mouseMoved(int x,int y) {
 
 mouse.x = x;
@@ -77,28 +68,20 @@ void ofApp::draw() {
 glEnable(GL_DEPTH_TEST);
 ofEnableLighting();
 ofSetSmoothLighting(true);
-//cam.begin();
 
 if(_draw_sys_info == true) {
-//system_info();
-
+system_info();
+}
+ 
 ofTranslate(planet.g_Position());
+cam.setParent(planet.g_Position());
 cam.setTarget(planet.g_Position());
 cam.lookAt(planet.g_Position());
 cam.begin();
-} else {
-cam.setTarget(ofVec3f(0,0,0));
-cam.lookAt(ofVec3f(0,0,0));
-cam.begin();
-}
-//cam.begin();
 
 star.draw();
 planet.draw();
-
-//mat.end();
 cam.end();
-//ofDisableLighting();
 }
 
 void ofApp::update() {
@@ -108,10 +91,8 @@ w_mouse_end = cam.screenToWorld(ofVec3f(mouse.x,mouse.y,1.0f));
 mouse_transmission = w_mouse_end - w_mouse;
 mouse_ray.s = w_mouse;
 mouse_ray.t = mouse_transmission;
-cout << planet.intersect(ofVec3f(2000,0,0)) <<  "test" << endl;
-//cout << w_mouse << endl;
-cout << (mouse_ray.distanceTo(ofVec3f(0,0,0))-250) << endl;
-cout << (mouse_ray.distanceTo(ofVec3f(2000,0,0))-100) << endl;
+//cout << (mouse_ray.distanceTo(ofVec3f(0,0,0))-250) << endl;
+//cout << (mouse_ray.distanceTo(ofVec3f(2000,0,0))-100) << endl;
 
 star.update();
 planet.update();
