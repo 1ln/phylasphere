@@ -73,10 +73,11 @@ if(_draw_sys_info == true) {
 system_info();
 }
  
-ofTranslate(planet.g_Position());
-cam.setParent(planet.g_Position());
-cam.setTarget(planet.g_Position());
-cam.lookAt(planet.g_Position());
+//ofTranslate(planet.g_Position());
+//cam.setParent(planet.ico);
+//cam.setPosition(planet.g_Position());
+//cam.setTarget(planet.g_Position());
+//cam.lookAt(planet.g_Position());
 cam.begin();
 
 star.draw();

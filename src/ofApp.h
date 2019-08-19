@@ -2,7 +2,7 @@
 
 #include "ofMain.h"
 
-#include "Planet.h"
+#include "PlanetarySphere.h"
 #include "Star.h"
 
 #include "ofxRay.h"
@@ -15,7 +15,7 @@ ofEasyCam cam;
 ofPoint mouse;
 
 Star star;
-Planet planet;
+PlanetarySphere planet;
  
 void draw(); 
 void update();
@@ -23,12 +23,8 @@ void setup();
 
 void mouseMoved(int x,int y);
 void keyPressed(int key);
-void keyReleased(int key);
 
 void system_info();
-void input_deactivate();
-void map_init();
-
 
 ofVec3f w_mouse;
 ofVec3f w_mouse_end;

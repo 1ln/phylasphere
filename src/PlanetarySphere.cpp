@@ -28,6 +28,9 @@ void PlanetarySphere::setup() {
 _p = ofVec3f(  _distance_from_center,0,0);
 ico.setPosition(_p);
 ico.set(_r,6);
+
+//orb.radius(_r);
+//orb.speed(.001);
 }
 
 void PlanetarySphere::update() {
@@ -48,7 +51,7 @@ for(unsigned int i = 0; i < vert.size(); ++i) {
 }
 
      //orb.radius(_distance_from_center);
-     //orb.speed(.0001);
+     //orb.speed(.000001);
      //_p = orb.rotate(_orbital_center,_p) ;
 
 
