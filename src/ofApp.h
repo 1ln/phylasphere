@@ -32,11 +32,9 @@ ofVec3f mouse_transmission;
 ofRay mouse_ray;
 
 float _x;
-float _y;
+float _y; 
 
-//float _r;
-//float _r2;
-//float _r3;
+bool mouse_reverse;
 
 ofTrueTypeFont font;
 bool _draw_sys_info;

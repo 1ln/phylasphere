@@ -9,20 +9,19 @@ _draw_sys_info = false;
 _draw_sys_count = 0;
 font.load("arial.ttf",10);
 
-//_r = 1000000;   
-//_r = ofRandom(0,4000000);   
-//_r2 = ofRandom(0,_r);
-
 ofBackground(0);
 
 ofSeedRandom();
 
-cam.setPosition(ofVec3f(250,250,250));
-cam.lookAt(ofVec3f(0,0,0));
+//cam.setPosition(ofVec3f(250,250,250));
+//cam.lookAt(ofVec3f(0,0,0));
 
+mouse_reverse = false;
+if(mouse_reverse == true) {
 cam.removeInteraction(ofEasyCam::TransformType::TRANSFORM_ROTATE,OF_MOUSE_BUTTON_LEFT);
 cam.removeInteraction(ofEasyCam::TransformType::TRANSFORM_TRANSLATE_Z,OF_MOUSE_BUTTON_RIGHT);
 cam.addInteraction(ofEasyCam::TransformType::TRANSFORM_ROTATE,OF_MOUSE_BUTTON_RIGHT);
+}
 
 star.setup();
 planet.setup();
@@ -35,6 +34,23 @@ void ofApp::system_info() {
 
 string fps = "FPS: " + ofToString(ofGetFrameRate(),2);
 font.drawString(fps,15,15);
+
+string millis = "Millis since start: " + ofToString(ofGetElapsedTimeMillis(),2);
+font.drawString(millis,15,30);
+
+string version = "Openframeworks version: " + ofToString(ofGetVersionInfo(),2);
+font.drawString(version,15,45);
+
+string cam_position = "Camera Position: " + ofToString(cam.getPosition(),2);
+font.drawString(cam_position,15,60);
+
+string cam_lookat = "Camera Look At: " + ofToString(cam.getLookAtDir(),2);
+font.drawString(cam_lookat,15,75);
+
+string cam_fov = "Camera FOV: " + ofToString(cam.getFov(),2);
+font.drawString(cam_fov,15,90);
+
+
 
 } 
 
@@ -73,11 +89,11 @@ if(_draw_sys_info == true) {
 system_info();
 }
  
-//ofTranslate(planet.g_Position());
-//cam.setParent(planet.ico);
+ofTranslate(planet.g_Position());
+cam.setParent(planet.ico);
 //cam.setPosition(planet.g_Position());
-//cam.setTarget(planet.g_Position());
-//cam.lookAt(planet.g_Position());
+cam.setTarget(planet.g_Position());
+cam.lookAt(planet.g_Position());
 cam.begin();
 
 star.draw();

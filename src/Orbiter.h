@@ -14,10 +14,6 @@ void center(ofVec3f c);
 
 ofVec3f rotate(ofVec3f c,ofVec3f p);
 
-//void setup();
-//void update();
-//void draw();
-
 private:
 
 float _s;

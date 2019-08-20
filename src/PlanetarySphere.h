@@ -30,8 +30,11 @@ ofColor c;
 
 private:
 
-float _n;
 float _r;
+float _n;
+float _scale;
+
+float _radius;
 ofVec3f _p;
 ofVec3f _orbital_center;
 float _distance_from_center;

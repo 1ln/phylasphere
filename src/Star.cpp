@@ -3,7 +3,7 @@
 Star::Star() {
 
 _r = ofRandom(50,250);
-_p = ofVec3f(2500,0,0);
+_p = ofVec3f(0,0,0);
 
 
 }
