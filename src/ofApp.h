@@ -15,8 +15,9 @@ ofEasyCam cam;
 ofPoint mouse;
 
 Star star;
+PlanetarySphere moon;
 PlanetarySphere planet;
- 
+
 void draw(); 
 void update();
 void setup();

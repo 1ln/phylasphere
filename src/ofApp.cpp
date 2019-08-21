@@ -13,8 +13,8 @@ ofBackground(0);
 
 ofSeedRandom();
 
-//cam.setPosition(ofVec3f(250,250,250));
-//cam.lookAt(ofVec3f(0,0,0));
+cam.setPosition(ofVec3f(250,250,250));
+cam.lookAt(ofVec3f(0,0,0));
 
 mouse_reverse = false;
 if(mouse_reverse == true) {
@@ -24,6 +24,9 @@ cam.addInteraction(ofEasyCam::TransformType::TRANSFORM_ROTATE,OF_MOUSE_BUTTON_RI
 }
 
 star.setup();
+moon.setOrbiting(true);
+moon.setPosition(ofVec3f(100,0,0));
+moon.setup();
 planet.setup();
 
 ofSetGlobalAmbientColor(ofColor(0,0,0));
@@ -89,14 +92,15 @@ if(_draw_sys_info == true) {
 system_info();
 }
  
-ofTranslate(planet.g_Position());
-cam.setParent(planet.ico);
+//ofTranslate(planet.g_Position());
+//cam.setParent(planet.ico);
 //cam.setPosition(planet.g_Position());
-cam.setTarget(planet.g_Position());
-cam.lookAt(planet.g_Position());
+//cam.setTarget(planet.g_Position());
+//cam.lookAt(planet.g_Position());
 cam.begin();
 
 star.draw();
+moon.draw();
 planet.draw();
 cam.end();
 }
@@ -112,5 +116,6 @@ mouse_ray.t = mouse_transmission;
 //cout << (mouse_ray.distanceTo(ofVec3f(2000,0,0))-100) << endl;
 
 star.update();
+moon.update();
 planet.update();
 }

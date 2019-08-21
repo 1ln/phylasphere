@@ -15,8 +15,9 @@ Noise noise;
 Orbiter orb;
 
 void radius(float r);
+void setOrbiting(bool orbiting);
 void orbiting(ofNode n);
-ofVec3f g_Position();
+void setPosition(ofVec3f p);
 
 void setup();
 void update();
@@ -24,18 +25,21 @@ void draw();
 
 ofIcoSpherePrimitive ico;
 ofMesh mesh;
+of3dPrimitive primitive;
 
 ofMaterial mat;
 ofColor c;
 
 private:
 
+bool orbiting_;
+
 float _r;
 float _n;
 float _scale;
 
 float _radius;
-ofVec3f _p;
+ofVec3f position_;
 ofVec3f _orbital_center;
 float _distance_from_center;
 

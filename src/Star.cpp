@@ -2,8 +2,8 @@
 
 Star::Star() {
 
-_r = ofRandom(50,250);
-_p = ofVec3f(0,0,0);
+_r = ofRandom(1,10);
+_p = ofVec3f(1000,0,0);
 
 
 }
@@ -20,7 +20,9 @@ ico.setPosition(_p);
 void Star::draw() {
 
 light.enable();
-ico.drawWireframe();
+//ico.drawWireframe();
+ofDrawSphere(_p,_r);
+
 
 }
 
