@@ -3,7 +3,7 @@
 Orbiter::Orbiter() {
 
 orbital_radius_ = 0;
-orbital_speed_ = 0.001;
+orbital_speed_ = 0.01;
 orbital_progression_ = ofRandom(0,TWO_PI);
 rotational_progression_ = 0;
 rotational_speed_ = 0.001;
@@ -42,9 +42,8 @@ n.rotateRad(rotational_progression_,axis);
 }
 
 void Orbiter::orbit(ofNode &n) {
-float distance = orbital_center_.squareDistance(n.getPosition());
-rotational_progression_ += rotational_speed_ * ofGetLastFrameTime();
-n.orbitRad(0,rotational_progression_,distance,orbital_center_);
+rotational_progression_ += orbital_speed_ * ofGetLastFrameTime();
+n.orbitRad(rotational_progression_,0,orbital_radius_,orbital_center_);
 }
 
 //ofVec3f Orbiter::orbit() {

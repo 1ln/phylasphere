@@ -14,10 +14,12 @@ PlanetarySphere();
 Noise noise;
 Orbiter orb;
 
-void radius(float r);
+void setRadius(float r);
 void setOrbiting(bool orbiting);
-void orbiting(ofNode n);
 void setPosition(ofVec3f p);
+void setOrbitalCenter(ofVec3f c);
+void setDistanceFromCenter(ofVec3f d);
+void setRotatingOnAxis(bool rotating); 
 
 void setup();
 void update();
