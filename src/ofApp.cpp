@@ -25,6 +25,13 @@ cam.addInteraction(ofEasyCam::TransformType::TRANSFORM_ROTATE,OF_MOUSE_BUTTON_RI
 
 star.setup();
 moon.setOrbiting(true);
+moon.orb.orbitalSpeed(0.1);
+moon.orb.rotationalSpeed(0.1);
+//moon.setRotationalSpeed(0.01);
+//moon.setOrbitalSpeed(0.01);
+moon.setRotatingOnAxis(true);
+moon.setRadius(50);
+//moon.setDistanceFromCenter(350);
 moon.setPosition(ofVec3f(350,0,0));
 moon.setup();
 planet.setup();

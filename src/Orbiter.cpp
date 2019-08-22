@@ -2,11 +2,11 @@
 
 Orbiter::Orbiter() {
 
-orbital_radius_ = 0;
-orbital_speed_ = 0.01;
+orbital_radius_ = 350;
+orbital_speed_ = 0.0;
 orbital_progression_ = ofRandom(0,TWO_PI);
 rotational_progression_ = 0;
-rotational_speed_ = 0.001;
+rotational_speed_ = 0.0;
 orbital_center_ = ofVec3f(0,0,0);
 position_ = ofVec3f(0,0,0);
 

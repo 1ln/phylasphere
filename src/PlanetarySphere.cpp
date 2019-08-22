@@ -9,6 +9,7 @@ distance_from_center_ = 0;
 scale_ = .00001;
 rotate_on_axis_ = false;
 orbiting_ = false;
+height_ = 0;
 
 } 
 
@@ -17,19 +18,15 @@ position_ = p;
 }
 
 void PlanetarySphere::setRadius(float r) { 
-_radius = r;
+radius_ = r;
 }
+
+void PlanetarySphere::setHeight(float h) {
+height_ = h;
+} 
 
 void PlanetarySphere::setOrbiting(bool orbiting) {
 orbiting_ = orbiting;
-}
-
-void PlanetarySphere::setOrbitalCenter(ofVec3f c) {
-orbital_center_ = c;
-}
-
-void PlanetarySphere::setDistanceFromCenter(ofVec3f d) {
-distance_from_center_ = d;
 }
 
 void PlanetarySphere::setRotatingOnAxis(bool rotating) {
@@ -40,9 +37,9 @@ void PlanetarySphere::setup() {
 
 _r = ofRandom(0,4000000);
 
-position_ = ofVec3f(  _distance_from_center,0,0);
+position_ = ofVec3f(distance_from_center_,0,0);
 ico.setPosition(position_);
-ico.set(_radius,6);
+ico.set(radius_,6);
 
 mesh = ico.getMesh();
 vector<glm::vec3> & vert = mesh.getVertices();
@@ -52,9 +49,9 @@ for(unsigned int i = 0; i < vert.size(); ++i) {
     ofVec3f v = vert.at(i);
     v.normalize();
 
-    _n = noise.fb3(v.x+_r*_scale,v.y+_r*_scale,v.z+_r*_scale);
+    _n = noise.fb3(v.x+_r*scale_,v.y+_r*scale_,v.z+_r*scale_);
     
-    mesh.setVertex(i,vert.at(i)+(v*_n*15));    
+    mesh.setVertex(i,vert.at(i)+(v*_n*height_));    
     c.setHsb(_n*25+25,128,255);
     mesh.addColor(c);
 }
@@ -63,7 +60,7 @@ for(unsigned int i = 0; i < vert.size(); ++i) {
 
 void PlanetarySphere::update() {
 
-if(rotate_on_axis == true) {
+if(rotate_on_axis_ == true) {
 orb.rotateAxis(primitive,ofVec3f(0,1,0));
 }
 

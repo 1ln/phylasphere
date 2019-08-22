@@ -15,10 +15,11 @@ Noise noise;
 Orbiter orb;
 
 void setRadius(float r);
+void setHeight(float h);
 void setOrbiting(bool orbiting);
 void setPosition(ofVec3f p);
 void setOrbitalCenter(ofVec3f c);
-void setDistanceFromCenter(ofVec3f d);
+void setDistanceFromCenter(float d);
 void setRotatingOnAxis(bool rotating); 
 
 void setup();
@@ -34,16 +35,17 @@ ofColor c;
 
 private:
 
-bool orbiting_;
-
 float _r;
 float _n;
-float _scale;
-
-float _radius;
+float scale_;
+float radius_;
+float height_;
 ofVec3f position_;
-ofVec3f _orbital_center;
-float _distance_from_center;
+ofVec3f orbital_center_;
+float distance_from_center_;
+bool rotate_on_axis_;
+bool orbiting_;
+
 
 };
 
