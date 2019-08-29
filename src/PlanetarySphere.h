@@ -29,6 +29,7 @@ void draw();
 ofIcoSpherePrimitive ico;
 ofMesh mesh;
 of3dPrimitive primitive;
+//ofShader shader;
 
 ofMaterial mat;
 ofColor c;

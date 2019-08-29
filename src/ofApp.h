@@ -11,13 +11,14 @@ class ofApp : public ofBaseApp {
 
 public:
 
+ofShader shader;
 ofEasyCam cam;
 ofPoint mouse;
 
 Star star;
 PlanetarySphere moon;
 PlanetarySphere planet;
-
+ 
 void draw(); 
 void update();
 void setup();
@@ -32,8 +33,12 @@ ofVec3f w_mouse_end;
 ofVec3f mouse_transmission;
 ofRay mouse_ray;
 
-float _x;
-float _y; 
+float r1;
+
+float w;
+float h; 
+ 
+bool shader_test;
 
 bool mouse_reverse;
 

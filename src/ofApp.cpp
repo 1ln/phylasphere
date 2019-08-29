@@ -2,8 +2,10 @@
 
 void ofApp::setup() {
 
-//_w = ofGetWidth();
-//_h = ofGetHeight();
+w = ofGetWidth();
+h = ofGetHeight();
+  
+shader_test = true;
 
 _draw_sys_info = false;
 _draw_sys_count = 0;
@@ -13,7 +15,7 @@ ofBackground(0);
 
 ofSeedRandom();
 
-cam.setPosition(ofVec3f(250,250,250));
+cam.setPosition(ofVec3f(0,0,75));
 cam.lookAt(ofVec3f(0,0,0));
 
 mouse_reverse = false;
@@ -23,17 +25,24 @@ cam.removeInteraction(ofEasyCam::TransformType::TRANSFORM_TRANSLATE_Z,OF_MOUSE_B
 cam.addInteraction(ofEasyCam::TransformType::TRANSFORM_ROTATE,OF_MOUSE_BUTTON_RIGHT);
 }
 
+shader.load("render.vert","render.frag");
+
+
+r1 = ofRandom(0,1);
+//shader.setUniform1f("u_random",r1);
+
 star.setup();
-moon.setOrbiting(true);
-moon.orb.orbitalSpeed(0.1);
-moon.orb.rotationalSpeed(0.1);
+//moon.setOrbiting(true);
+//moon.orb.orbitalSpeed(0.1);
+//moon.orb.rotationalSpeed(0.1);
 //moon.setRotationalSpeed(0.01);
 //moon.setOrbitalSpeed(0.01);
-moon.setRotatingOnAxis(true);
-moon.setRadius(50);
+//planet.setRotatingOnAxis(true);
+planet.setHeight(25);
+//moon.setRadius(50);
 //moon.setDistanceFromCenter(350);
-moon.setPosition(ofVec3f(350,0,0));
-moon.setup();
+//moon.setPosition(ofVec3f(350,0,0));
+//moon.setup();
 planet.setup();
 
 ofSetGlobalAmbientColor(ofColor(0,0,0));
@@ -94,7 +103,6 @@ void ofApp::draw() {
 glEnable(GL_DEPTH_TEST);
 ofEnableLighting();
 ofSetSmoothLighting(true);
-
 if(_draw_sys_info == true) {
 system_info();
 }
@@ -104,12 +112,34 @@ system_info();
 //cam.setPosition(planet.g_Position());
 //cam.setTarget(planet.g_Position());
 //cam.lookAt(planet.g_Position());
+//cam.begin();
+ 
+if(shader_test == true) {
+shader.begin();
 cam.begin();
+shader.setUniform2f("u_resolution",w,h);
+shader.setUniform1f("u_time",ofGetElapsedTimef());
+shader.setUniform1f("u_random",r1); 
 
+shader.setUniform3f("u_cam_position",cam.getGlobalPosition());
+
+//cam.begin();
+//ofTranslate(0,0);
+ofDrawRectangle(0,0,w,h);
+//star.draw();
+//planet.draw();
+
+cam.end();
+shader.end();
+} else { 
+
+cam.begin();
 star.draw();
-moon.draw();
+//moon.draw();
 planet.draw();
 cam.end();
+
+}
 }
 
 void ofApp::update() {
@@ -123,6 +153,6 @@ mouse_ray.t = mouse_transmission;
 //cout << (mouse_ray.distanceTo(ofVec3f(2000,0,0))-100) << endl;
 
 star.update();
-moon.update();
+//moon.update();
 planet.update();
 }

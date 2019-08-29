@@ -34,6 +34,14 @@ rotate_on_axis_ = rotating;
 }
 
 void PlanetarySphere::setup() {
+//shader.load("render.vert","render.frag");
+
+}
+
+void PlanetarySphere::update() { 
+} 
+
+void PlanetarySphere::draw() {
 
 _r = ofRandom(0,4000000);
 
@@ -51,29 +59,41 @@ for(unsigned int i = 0; i < vert.size(); ++i) {
 
     _n = noise.fb3(v.x+_r*scale_,v.y+_r*scale_,v.z+_r*scale_);
     
+    
+    //shader.setUniform2f("u_resolution",ofGetWidth(),ofGetHeight());   
+    //shader.setUniform1f("u_noise",_n);
+   
     mesh.setVertex(i,vert.at(i)+(v*_n*height_));    
     c.setHsb(_n*25+25,128,255);
     mesh.addColor(c);
 }
     primitive.getMesh().append(mesh);     
-}
+//}
 
-void PlanetarySphere::update() {
+//void PlanetarySphere::update() {
 
 if(rotate_on_axis_ == true) {
-orb.rotateAxis(primitive,ofVec3f(0,1,0));
+//orb.rotateAxis(primitive,ofVec3f(0,1,0));
 }
 
 if(orbiting_ == true) { 
-orb.orbit(primitive);
+//orb.orbit(primitive);
 }
 
-}
+//}
 
-void PlanetarySphere::draw() { 
+//void PlanetarySphere::draw() { 
 
-mat.begin();
+mat.begin(); 
 primitive.draw();
 mat.end(); 
+
+//shader.begin();
+
+
+//ofDrawRectangle(0,0,ofGetWidth(),ofGetHeight());
+//shader.end();
+
+
 
 }
