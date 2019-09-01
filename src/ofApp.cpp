@@ -16,6 +16,7 @@ ofBackground(0);
 ofSeedRandom();
 
 cam.setPosition(ofVec3f(0,0,75));
+//cam.setDistance(75); 
 cam.lookAt(ofVec3f(0,0,0));
 
 mouse_reverse = false;
@@ -115,20 +116,23 @@ system_info();
 //cam.begin();
  
 if(shader_test == true) {
+
 shader.begin();
-cam.begin();
+cam.setDistance(75);
 shader.setUniform2f("u_resolution",w,h);
 shader.setUniform1f("u_time",ofGetElapsedTimef());
-shader.setUniform1f("u_random",r1); 
+shader.setUniform1f("u_random",r1);
+
+//shader.setUniform1f("u_noise",ofNoise(j));
+
 
 shader.setUniform3f("u_cam_position",cam.getGlobalPosition());
+shader.setUniform3f("u_cam_lookat",cam.getLookAtDir());
+shader.setUniform3f("u_cam_up",cam.getUpAxis());
 
-//cam.begin();
-//ofTranslate(0,0);
 ofDrawRectangle(0,0,w,h);
-//star.draw();
-//planet.draw();
 
+cam.begin();
 cam.end();
 shader.end();
 } else { 
