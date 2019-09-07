@@ -15,7 +15,7 @@ ofBackground(0);
 
 ofSeedRandom();
 
-cam.setPosition(ofVec3f(0,0,75));
+cam.setPosition(ofVec3f(0,0,5));
 //cam.setDistance(75); 
 cam.lookAt(ofVec3f(0,0,0));
 
@@ -118,7 +118,7 @@ system_info();
 if(shader_test == true) {
 
 shader.begin();
-cam.setDistance(75);
+cam.setDistance(5);
 shader.setUniform2f("u_resolution",w,h);
 shader.setUniform1f("u_time",ofGetElapsedTimef());
 shader.setUniform1f("u_random",r1);
