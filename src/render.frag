@@ -1,24 +1,37 @@
 #version 330
+
 uniform vec2 u_resolution; 
 uniform float u_time;
+//uniform float u_mouse;
+
 uniform vec3 u_cam_position;
+
+//uniform float u_random_hash;
 uniform float u_random;
 
-uniform vec3 u_cam_lookat;
-
-
 const float PHI = 1.618033988749894; 
+const float PI = 3.1415926535;
+
+const float EPSILON = 0.001;
+const int RAYMARCH_STEPS = 32;
+const float TRACE_DISTANCE = 50.0;
 
 float phiHash(float h) {
 return fract(PHI * h);
 }
 
 float rand2d(vec2 st) {
-return fract(sin(dot(st.xy,vec2(12.9898,78.233))) * 43758.5453);
+return fract(sin(dot(st.xy,vec2(12.9898,78.233))) * 43758.5453123) * 2.0 - 1.0 ;
 }
 
 float rand3d(vec3 st) {
-return fract(sin(dot(st.xyz,vec3(12.9898,78.233,144.7272))) * 43758.5453); 
+return fract(sin(dot(st.xyz,vec3(12.9898,78.233,128.852))) * 43758.5453) * 2.0 - 1.0; 
+}
+
+float hash(float n) { return fract(sin(n) * 753.5453123); }
+
+float sin3(vec3 p,float n,float l) {
+return sin(p.x * n) * sin(p.y * n) * sin(p.z * n) * l;  
 }
 
 float noise2d(in vec2 st_) {
@@ -46,7 +59,7 @@ float amp = 0.5;
 
 //mat2 rot = mat2(cos(0.5),sin(0.5),-sin(0.5),cos(0.5);
 
-for(int i = 0; i < 3; ++i) {
+for(int i = 0; i < 6; ++i) {
 value += amp * noise2d(st_);
 st_ *= 2.0; 
 //st_ = rot * st_ * 2.0 + shift;
@@ -56,258 +69,221 @@ amp *= 0.5;
 return value;
 }
 
-//3d Interpolated Noise
-float interpolate(in float a,in float b,in float x) {
-return a + smoothstep(0.0,1.0,x) * (b-a);
+float noise3d(vec3 x,float r) {
+
+vec3 p = floor(x);
+vec3 f = fract(x);
+
+f = f * f * (3.0 - 2.0 * f); 
+float n = p.x + p.y * 157.0 + 113.0 * p.z + r;
+
+return mix(mix(mix(hash(n + 0.0),hash(n + 1.0),f.x), 
+               mix(hash(n + 157.0),hash(n + 158.0),f.x),f.y),
+           mix(mix(hash(n + 113.0),hash(n + 114.0),f.x),
+               mix(hash(n + 270.0),hash(n + 271.0),f.x),f.y),f.z);
+} 
+
+
+#define FB3D_OCTAVES 4
+float fb3d(vec3 x,float r) {
+
+float value = 0.0;
+float amp = 0.5;
+
+for(int i = 0; i < FB3D_OCTAVES; ++i) {
+
+value += amp * noise3d(x,r);
+x *= 2.0;
+amp *= 0.5;
 }
-
-float interpolateRand3d(in float x,in float y,in float z) {
-
-float int_x = x - fract(x);
-float fract_x =  x - int_x;
- 
-float int_y = y - fract(x);
-float fract_y = y - int_y;
-
-float int_z = z - fract(z);
-float fract_z = z - int_z;
-
-float v1 = rand3d(vec3(int_x,int_y,int_z));
-float v2 = rand3d(vec3(int_x + 1.0,int_y,int_z));
-float v3 = rand3d(vec3(int_x,int_y + 1.0,int_z));
-float v4 = rand3d(vec3(int_x + 1.0,int_y + 1.0,int_z));
-float v5 = rand3d(vec3(int_x,int_y,int_z + 1.0));
-float v6 = rand3d(vec3(int_x + 1.0,int_y,int_z + 1.0));
-float v7 = rand3d(vec3(int_x,int_y + 1.0,int_z + 1.0));
-float v8 = rand3d(vec3(int_x + 1.0,int_y + 1.0,int_z + 1.0));
-
-float i1 = interpolate(v1,v5,fract_z);
-float i2 = interpolate(v2,v6,fract_z);
-float i3 = interpolate(v3,v7,fract_z);
-float i4 = interpolate(v4,v8,fract_z);
-
-float ii1 = interpolate(i1,i2,fract_x);
-float ii2 = interpolate(i3,i4,fract_x);
-
-return interpolate(ii1,ii2,fract_y);
-}
-
-float noiseLerp3d(in vec3 p,in float wavelength) {
-return interpolateRand3d(p.x/wavelength,p.y/wavelength,p.z/wavelength);
-}
-
-float simplexNoise3d(vec3 p) {
-
-float f3 = 1.0/3.0;
-float s = (p.x+p.y+p.z) * f3;
-
-int i = int(floor(p.x + s);
-int j = int(floor(p.y + s);
-int k = int(floor(p.z + s);
-
-float g3 = 1.0/6.0;
-float t = float(i+j+k)) * g3;
-
-float x0 = float(i) - t;
-float y0 = float(j) - t;
-float z0 = float(k) - t;
-
-x0 = p.x - x0;
-y0 = p.y - y0;
-z0 = p.z - z0;
-
-int i1,j1,k1,i2,j2,k2;
-
-if(x0 >= y0) { 
-
-    if(y0 >= z0) {
-    i1 = 0;
-    j1 = 0;
-    k1 = 0;
-    i2 = 1;
-    j2 = 1;
-    k2 = 0;
-    
-    } else if (x0 >= z0) {
-    i1 = 1;
-    j1 = 0;
-    k1 = 0;
-    i2 = 1;
-    j2 = 0;
-    k2 = 1;
-
-    } else {
-    i1 = 0;
-    j1 = 0;
-    k1 = 1;
-    i2 = 1;
-    j2 = 0;
-    k2 = 1;
-
-    }
-
-    } else {
-
-    if(y0 < z0) {
-    i1 = 0;
-    j1 = 0;
-    k1 = 1;
-    i2 = 0;
-    j2 = 1;
-    k2 = 1;
-    
-    } else if (x0 < z0) {
-    i1 = 0;
-    j1 = 1;
-    k1 = 0;
-    i2 = 0;
-    j2 = 1;
-    k2 = 1;
-
-    } else {
-    i1 = 0;
-    j1 = 1;
-    k1 = 0;
-    i2 = 1;
-    j2 = 1;
-    k2 = 0;
-
-    }
-
-}
-
-float x1 = x0 - float(i1) + g3;
-float y1 = y0 - float(j1) + g3;
-float z1 = z0 - float(k1) + g3;
-
-float x2 = x0 - float(i2) + 2.0 * g3;
-float y2 = y0 - float(j2) + 2.0 * g3;
-float z2 = z0 - float(k2) + 2.0 * g3;
-
-float x3 = x0 - 1.0 + 3.0 * g3;
-float y3 = y0 - 1.0 + 3.0 * g3;
-float z3 = z0 - 1.0 + 3.0 * g3;
-
-vec3 ijk0 = vec3(i,j,k);
-vec3 ijk1 = vec3(i + i1,j + j1,k + k1);
-vec3 ijk2 = vec3(i + i2,j + j2,k + k2);
-vec3 ijk3 = vec3(i + 1,j + 1,k + 1);
-
-vec3 gr0 = normalize(vec3(rand3d(ijk0),rand3d(ijk0) * 2.01),rand3d(ijk0) * 2.01 ));
-vec3 gr1 = normalize(vec3(rand3d(ijk1),rand3d(ijk1) * 2.01),rand3d(ijk1) * 2.01 ));
-vec3 gr2 = normalize(vec3(rand3d(ijk2),rand3d(ijk2) * 2.01),rand3d(ijk2) * 2.01 ));
-vec3 gr3 = normalize(vec3(rand3d(ijk3),rand3d(ijk3) * 2.01),rand3d(ijk3) * 2.01 ));
-
-
-float n0 = 0.0;
-float n1 = 0.0;
-float n2 = 0.0;
-float n3 = 0.0;
-
-float t0 = 0.5 - x0*x0 - y0*y0 - z0*z0;
-float t1 = 0.5 - x1*x1 - y1*y1 - z1*z1;
-float t2 = 0.5 - x2*x2 - y2*y2 - z2*z2;
-float t3 = 0.5 - x3*x3 - y3*y3 - z3*z3;
-
-if(t0 >= 0.0) {
-t0 *= t0;
-n0 = t0 * t0 * dot(gr0,vec3(x0,y0,z0);
-}
-
-if(t1 >= 0.0) {
-t1 *= t1;
-n1 = t1 * t1 * dot(gr1,vec3(x1,y1,z1);
-}
-
-if(t2 >= 0.0) {
-t2 *= t2;
-n2 = t2 * t2 * dot(gr2,vec3(x2,y2,z2);
-}
-
-if(t3 >= 0.0) {
-t3 *= t3;
-n3 = n3 * n3 * dot(gr3,vec3(x3,y3,z3);
-}
-
-return 96.0 * (n0 + n1 + n2 + n3);
+return value;
 }
 
 //2d Shaping Functions
- 
-//3d Signed Distance Functions
 
-float sphereSDF(vec3 p,float r) {
+float linear(float x) {
+return x;
+}
+
+float power(float x,float f) {
+return pow(x,f);
+}
+
+float envImpulse(float x,float k) {
+float h = k * x;
+return h * exp(1.0 - h);
+}
+
+float envStep(float x,float k,float n) {
+return exp(-k * pow(x,n));
+}
+
+float cubicImpulse(float x,float c,float w) {
+x = abs(x - c);
+    if( x > w) { return 0.0; }
+
+x /= w;
+return 1.0 - x * x  * (3.0 - 2.0 * x);
+
+}
+
+float sincPhase(float x,float k) {
+float a = PI * (k * x - 1.0);
+return sin(a)/a;
+}
+
+//Rotations
+
+mat4 rotY(float theta) {
+float c = cos(theta);
+float s = sin(theta);
+
+return mat4( 
+    vec4(c,0,s,0),
+    vec4(0,1,0,0),
+    vec4(-s,0,c,0),
+    vec4(0,0,0,1)
+);
+}
+
+mat4 rotX(float theta) {
+float c = cos(theta);
+float s = sin(theta);
+
+return mat4( 
+    vec4(s,0,c,0),
+    vec4(0,1,0,0),
+    vec4(-c,0,s,0),
+    vec4(0,0,0,1)
+);
+}
+
+mat2  rotate(in float theta) {
+float c = cos(theta);
+float s = sin(theta);
+
+return mat2(c,-s,s,c);
+}
+
+//Signed Distance Functions
+
+float sphereSDF(vec3 p,float r) { 
 return length(p) - r;
 }
 
-float boxSDF(vec3 p,float s) {
-vec3 d = abs(p) - s;
-return length(max(d,0.0));
+float coneSDF(vec3 p,vec2 c) {
+float q = length(p.xy);
+return dot(c,vec2(q,p.z));
+}
+
+float planeSDF(vec3 p,vec4 n) {
+return dot(p,n.xyz) + n.w;
+}
+
+float capsuleSDF(vec3 p,vec3 a,vec3 b,float r) {
+
+vec3 pa = p - a;
+vec3 ba = b - a;
+
+float h = clamp(dot(pa,ba)/dot(ba,ba),0.0,1.0);
+
+return length(pa - ba * h) - r;
+} 
+
+float triangularPrismSDF(vec3 p,vec2 h) {
+vec3 q = abs(p);
+return max(q.z - h.y,max(q.x * 0.866025 + p.y * 0.5,-p.y) - h.x * 0.5); 
+}
+
+float boxSDF(vec3 p,vec3 b) {
+vec3 d = abs(p) - b;
+return length(max(d,0.0)) + min(max(d.x,max(d.y,d.z)),0.0);
+}
+
+float torusSDF(vec3 p,vec2 t) {
+vec2 q = vec2(length(vec2(p.x,p.z)) - t.x,p.y);
+return length(q) - t.y; 
+}
+
+float cylinderSDF(vec3 p,float h,float r) {
+vec2 d = abs(vec2(length(vec2(p.x,p.z)),p.y) - vec2(h,r));
+return min(max(d.x,d.y),0.0) + length(max(d,0.0));
+}
+
+float hexPrismSDF(vec3 p,vec2 h) {
+
+const vec3 k = vec3(-0.8660254,0.5,0.57735);
+p = abs(p);
+p.xy -= 2.0 * min(dot(k.xy,p.xy),0.0) * k.xy;
+
+vec2 d = vec2(length(p.xy - vec2(clamp(p.x,-k.z * h.x,k.z * h.x),h.x)) * sign(p.x-h.x),p.z-h.x);
+return min(max(d.x,d.y),0.0) + length(max(d,0.0));
+}
+
+vec2 opU(in vec2 d1,in vec2 d2) {
+return d1.x < d2.x ? d1 : d2;
 }
 
 //Raymarching
 
-float map(vec3 p) {
-//return sphereSDF(p,50+fb2d(vec2(p.x,p.y)) ) ;
-return sphereSDF(p,10*noiseLerp3d(vec3(p.x,p.y,p.z),8)); 
-//return boxSDF(p,10.0);
+vec2 map(in vec3 p) {
+    
+vec2 res = vec2(1.0,0.0);
+
+//float n = sin3(p,5.0,.25);
+
+float n = fb3d( p  ,u_random) ;
+
+//vec3 rotating_point  = (rotY(u_time/100) * vec4(p,1.0)).xyz;
+//float n = fb3d(vec3(rotating_point),u_random);
+// p.xy *= rotate(u_time/100);
+
+res = opU(res,vec2(sphereSDF(p - vec3(0.0,0.0,0.0)   ,2.0)+n,0.0));
+//res = opU(res,vec2(boxSDF(p - vec3(0.0,0.0,0.0),vec3(1.0)),0.0));
+
+return res;
+
 }
 
-float ray_march(vec3 cam_ray,vec3 marching_direction,float start,float end) {
-//float ray_march(float distance_field,float start,float end) { 
+vec2 rayMarch(in vec3 ro,in vec3 rd) {
 
-float depth = start;
+float depth = 0.0;
+float d = -1.0;
 
-for(int i = 0; i <= 64; i++) {
+for(int i = 0; i < RAYMARCH_STEPS; ++i) {
+
+vec3 position = ro + rd * depth;
+vec2 distance = map(position);
  
-float distance_field =  map(cam_ray + depth * marching_direction);
- 
-    if(distance_field < 0.01) {
-    return depth;
+    if(distance.x < EPSILON || TRACE_DISTANCE < distance.x) { break  ;} 
+
+    depth += distance.x;
+    d = distance.y;
     }
-    depth += distance_field;
-    if(depth >= end) {
-    return end;
-    }
-}
-return end;
-}
-
-vec3 rayDirection(float fov,vec2 size,vec2 fragCoord) {
-
-vec2 xy = fragCoord - size / 2.0;
-float z = size.y / tan(radians(fov)) / 2.0; 
-
-return normalize(vec3(xy,-z)); 
+    
+    if(TRACE_DISTANCE < depth) { d = -1.0; }
+    return vec2(depth,d);
 }
 
 vec3 calcNormal(vec3 p) {
+
+vec2 e = vec2(1.0,-1.0) * 0.00001;
+
 return normalize(vec3(
-       map(vec3(p.x + 0.001,p.y,p.z)) - map(vec3(p.x - 0.001,p.y,p.z)),
-       map(vec3(p.x,p.y + 0.001,p.z)) - map(vec3(p.x,p.y - 0.001,p.z)),
-       map(vec3(p.x,p.y,p.z + 0.001)) - map(vec3(p.x,p.y,p.z - 0.001))
+
+                vec3(e.x,e.y,e.y) * map(p + vec3(e.x,e.y,e.y)).x + 
+                vec3(e.y,e.x,e.y) * map(p + vec3(e.y,e.x,e.y)).x +
+                vec3(e.y,e.y,e.x) * map(p + vec3(e.y,e.y,e.x)).x +
+                vec3(e.x,e.x,e.x) * map(p + vec3(e.x,e.x,e.x)).x
 ));
-}     
 
-float softLight(in vec3 origin,in vec3 direction,float mint,float maxt,float k) {
-
-float res = 1.0;
-    for(float t = mint; t < maxt;) {
-        float h = map(origin + direction * t);
-         
-            if(h < 0.001) {
-            return 0.0;
-            }
-        
-        res = min(res,k*h/t);
-        t += h;
 }
-return res;
-}
+     
 
 vec3 phongModel(vec3 kd,vec3 ks,float alpha,vec3 p,vec3 cam_ray,vec3 light_pos,vec3 intensity) {  
 
 vec3 n = calcNormal(p);
+
 vec3 l = normalize(light_pos - p);
 vec3 v = normalize(cam_ray - p);
 vec3 r = normalize(reflect(-l,n));
@@ -330,60 +306,71 @@ vec3 phongLight(vec3 ka,vec3 kd,vec3 ks,float alpha,vec3 p,vec3 cam_ray) {
 const vec3 ambient_light = 0.5  * vec3(1.0,1.0,1.0);
 vec3 color = ka * ambient_light;  
 
-vec3 light = vec3(100,100,100);
-vec3 intensity = vec3(0.4,0.4,0.4);
+vec3 light = vec3(10,10,10);
+vec3 intensity = vec3(0.5,0.5,0.5);
 
 color += phongModel(kd,ks,alpha,p,cam_ray,light,intensity); 
 return color;
 
 }
 
-mat4 viewMatrix(vec3 cam_ray,vec3 center,vec3 up) {
-    vec3 f = normalize(center - cam_ray);
-    vec3 s = normalize(cross(f,up));
-    vec3 u = cross(s,f);
+mat3 rayDirection(in vec3 camera_position,in vec3 camera_target,in float r) {
 
-    return mat4(
-           vec4(s,0.0),
-           vec4(u,0.0),
-           vec4(-f,0.0),
-           vec4(0.0,0.0,0.0,1.0)
-    );
+//vec3 rayCameraDirection(vec2 uv,vec3 cam_position,vec3 cam_target) {
+
+vec3 camera_forward = normalize(camera_target - camera_position);
+vec3 camera_up = vec3(sin(r),cos(r),0.0);
+vec3 u = normalize(cross(camera_forward,camera_up));
+vec3 v = normalize(cross(u,camera_forward));
+
+return mat3(u,v,camera_forward);
+
+}
+
+vec3 render(vec3 ro,vec3 rd) {
+
+vec2 rend = rayMarch(ro,rd);
+
+//float distance = rayMarch(ro,rd);
+
+float distance = rend.x;
+float d = rend.y;
+
+vec3 position =  ro + rd * distance;
+vec3 normal = calcNormal(position);
+
+vec3 light_position = vec3(-250.0);
+vec3 light_dir = normalize(light_position - position);
+
+vec3 ka = vec3(0.0);
+vec3 kd = vec3(0.5);
+vec3 ks = vec3(1.0);
+float shininess = 0.0;
+ 
+//vec3 color;
+
+//if(d < 0.0) { 
+//color = vec3(0.0);
+//} else {
+vec3 color = phongLight(ka,kd,ks,shininess,position,ro);
+//}
+
+
+return color;
+
 }
 
 void main() {
 
-vec2 uv = -1.0 + 2.0 *  (gl_FragCoord.xy / u_resolution.xy)    ;
-float r2 = fb2d(uv);
+vec3 camera_position = vec3(u_cam_position);
+vec3 camera_target = vec3(0,0,0);
 
-vec3 dir = rayDirection(60,u_resolution.xy,gl_FragCoord.xy);
-//vec3 cam_ray = vec3(0.0,0.0,75.0);
-//vec3 cam_ray = vec3(-25.0,-50.0,-25.0);
-vec3 cam_ray =  vec3(u_cam_position)   ;
+vec2 uv = (gl_FragCoord.xy - 0.5 * u_resolution.x) / (min (u_resolution.x,u_resolution.y) );
 
-mat4 viewWorld = viewMatrix(cam_ray,vec3(0.0,0.0,0.0),vec3(0.0,1.0,0.0));
-vec3 worldDir = (viewWorld * vec4(dir,0.0)).xyz; 
+vec3 direction = rayDirection(camera_position,camera_target,0.0) * normalize(vec3(uv,1.0));
 
-float dist = ray_march(cam_ray,worldDir,0.0,100.0);
-//float dist = sphereSDf(cam_ray *    ,50.0)
-
-   if(dist > 100.0 - 0.01) {
-   gl_FragColor = vec4(0.0,1.0,0.0,1.0);
-   return; 
-  
-   }
+vec3 color = render(camera_position,direction);
    
-   //float sl = softLight(cam_ray,dir,0.0,10.0,8);
-
-   vec3 p = vec3(cam_ray + dist * worldDir);
-   vec3 ka = vec3(0.0,0.0,0.);
-   vec3 kd = vec3(0.5,0.0,0.0);
-   vec3 ks = vec3(1.0,1.0,1.0);
-   float shininess = 10.0; 
-
-   vec3 color = phongLight(ka,kd,ks,shininess,p,cam_ray);
-   //vec3 color = vec3(1.0,0.0,0.0);
-   gl_FragColor = vec4(color,1.0);
-   //gl_FragColor = sl;
+gl_FragColor = vec4(color,1.0);
 
 }
