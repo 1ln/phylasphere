@@ -57,8 +57,8 @@ for(unsigned int i = 0; i < vert.size(); ++i) {
     ofVec3f v = vert.at(i);
     v.normalize();
 
-    _n = noise.fb3(v.x+_r*scale_,v.y+_r*scale_,v.z+_r*scale_);
-    
+    //_n = noise.fb3(v.x+_r*scale_,v.y+_r*scale_,v.z+_r*scale_);
+    _n = noise.fb3(v +_r*scale_);
     
     //shader.setUniform2f("u_resolution",ofGetWidth(),ofGetHeight());   
     //shader.setUniform1f("u_noise",_n);

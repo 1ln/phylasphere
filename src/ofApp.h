@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 
+#include "Noise.h"
 #include "PlanetarySphere.h"
 #include "Star.h"
 
@@ -14,6 +15,8 @@ public:
 ofShader shader;
 ofEasyCam cam;
 ofPoint mouse;
+
+Noise noise;
 
 Star star;
 PlanetarySphere moon;

@@ -125,14 +125,22 @@ shader.setUniform1f("u_random",r1);
 
 //shader.setUniform1f("u_noise",ofNoise(j));
 
-
 shader.setUniform3f("u_cam_position",cam.getGlobalPosition());
 shader.setUniform3f("u_cam_lookat",cam.getLookAtDir());
-shader.setUniform3f("u_cam_up",cam.getUpAxis());
+
+
+ 
+
+
+
+shader.setUniform1f("u_noise",noise.fb3(ofVec3f(0,0,0)));
+
 
 ofDrawRectangle(0,0,w,h);
 
 cam.begin();
+
+//noise.setCamera(cam);
 cam.end();
 shader.end();
 } else { 
