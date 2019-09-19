@@ -9,7 +9,11 @@ shader_test = true;
 
 _draw_sys_info = false;
 _draw_sys_count = 0;
-font.load("arial.ttf",10);
+keypress_i_ = 0;
+n = 0;
+
+noise3d();
+system.setup();
 
 ofBackground(0);
 
@@ -19,66 +23,27 @@ cam.setPosition(ofVec3f(0,0,5));
 //cam.setDistance(75); 
 cam.lookAt(ofVec3f(0,0,0));
 
-mouse_reverse = false;
-if(mouse_reverse == true) {
-cam.removeInteraction(ofEasyCam::TransformType::TRANSFORM_ROTATE,OF_MOUSE_BUTTON_LEFT);
-cam.removeInteraction(ofEasyCam::TransformType::TRANSFORM_TRANSLATE_Z,OF_MOUSE_BUTTON_RIGHT);
-cam.addInteraction(ofEasyCam::TransformType::TRANSFORM_ROTATE,OF_MOUSE_BUTTON_RIGHT);
-}
+//settings.mouseButtonsReversed(cam);
 
 shader.load("render.vert","render.frag");
 
-
+//df.shaderSetup();
 r1 = ofRandom(0,1);
-//shader.setUniform1f("u_random",r1);
+//shader.setUniform1f("u_random_hash",r1);
 
-star.setup();
-//moon.setOrbiting(true);
-//moon.orb.orbitalSpeed(0.1);
-//moon.orb.rotationalSpeed(0.1);
-//moon.setRotationalSpeed(0.01);
-//moon.setOrbitalSpeed(0.01);
-//planet.setRotatingOnAxis(true);
-planet.setHeight(25);
-//moon.setRadius(50);
-//moon.setDistanceFromCenter(350);
-//moon.setPosition(ofVec3f(350,0,0));
-//moon.setup();
-planet.setup();
+//planet.setup();
 
 ofSetGlobalAmbientColor(ofColor(0,0,0));
 
 }
-
-void ofApp::system_info() {
-
-string fps = "FPS: " + ofToString(ofGetFrameRate(),2);
-font.drawString(fps,15,15);
-
-string millis = "Millis since start: " + ofToString(ofGetElapsedTimeMillis(),2);
-font.drawString(millis,15,30);
-
-string version = "Openframeworks version: " + ofToString(ofGetVersionInfo(),2);
-font.drawString(version,15,45);
-
-string cam_position = "Camera Position: " + ofToString(cam.getPosition(),2);
-font.drawString(cam_position,15,60);
-
-string cam_lookat = "Camera Look At: " + ofToString(cam.getLookAtDir(),2);
-font.drawString(cam_lookat,15,75);
-
-string cam_fov = "Camera FOV: " + ofToString(cam.getFov(),2);
-font.drawString(cam_fov,15,90);
-
-
-
-} 
 
 void ofApp::keyPressed(int key) {
 
     if(key == 'i') {
     _draw_sys_info = true;
     ++_draw_sys_count;
+    keypress_i_ = true;
+    //shader.setUniform1i("u_keypress_i",1);
     }
     if(_draw_sys_count > 1) {
     _draw_sys_info = false;
@@ -92,6 +57,14 @@ void ofApp::keyPressed(int key) {
 
 }
 
+void ofApp::keyReleased(int key) {
+    
+    if(key == 'i') {
+    keypress_i_ = false;
+    //shader.setUniform1i("u_keypress_i",);
+    }
+} 
+
 void ofApp::mouseMoved(int x,int y) {
 
 mouse.x = x;
@@ -104,51 +77,50 @@ void ofApp::draw() {
 glEnable(GL_DEPTH_TEST);
 ofEnableLighting();
 ofSetSmoothLighting(true);
+
 if(_draw_sys_info == true) {
-system_info();
+//system.display();
 }
- 
-//ofTranslate(planet.g_Position());
-//cam.setParent(planet.ico);
-//cam.setPosition(planet.g_Position());
-//cam.setTarget(planet.g_Position());
-//cam.lookAt(planet.g_Position());
-//cam.begin();
  
 if(shader_test == true) {
 
 shader.begin();
+
+//float n2 = noise3d();
+
 cam.setDistance(5);
-shader.setUniform2f("u_resolution",w,h);
+//cout << n2 << endl;
+shader.setUniform2f("u_resolution",ofGetWidth(),ofGetHeight());
 shader.setUniform1f("u_time",ofGetElapsedTimef());
-shader.setUniform1f("u_random",r1);
-
-//shader.setUniform1f("u_noise",ofNoise(j));
-
+shader.setUniform1f("u_random_hash",r1);
+shader.setUniform1f("u_random",ofRandom(0,1));
 shader.setUniform3f("u_cam_position",cam.getGlobalPosition());
-shader.setUniform3f("u_cam_lookat",cam.getLookAtDir());
+shader.setUniform2f("u_mouse",mouse.x,mouse.y);
+shader.setUniform1f("u_noise",1.0);
+shader.setUniform1i("u_keypress_i",keypress_i_);
 
-
- 
-
-
-
-shader.setUniform1f("u_noise",noise.fb3(ofVec3f(0,0,0)));
-
-
+//noise3d();
+//shader.setUniform1fv("u_test",&test[0],test.size());
+shader.setUniform1fv("u_test",&test[0],100);
 ofDrawRectangle(0,0,w,h);
 
-cam.begin();
+//cam.begin();
+//cout << df.sphere(glm::vec3(0,0,0),glm::vec3(0,0,0),2.0) << endl;
 
-//noise.setCamera(cam);
-cam.end();
+
+//cam.end();
+
 shader.end();
+//df.updateUniforms();
+//df.shaderDraw();
+
+cam.begin();
+cam.end();
+
 } else { 
 
 cam.begin();
-star.draw();
-//moon.draw();
-planet.draw();
+//planet.draw();
 cam.end();
 
 }
@@ -158,13 +130,39 @@ void ofApp::update() {
 
 w_mouse = cam.screenToWorld(ofVec3f(mouse.x,mouse.y,0.0f));
 w_mouse_end = cam.screenToWorld(ofVec3f(mouse.x,mouse.y,1.0f)); 
+
 mouse_transmission = w_mouse_end - w_mouse;
 mouse_ray.s = w_mouse;
 mouse_ray.t = mouse_transmission;
 //cout << (mouse_ray.distanceTo(ofVec3f(0,0,0))-250) << endl;
-//cout << (mouse_ray.distanceTo(ofVec3f(2000,0,0))-100) << endl;
-
-star.update();
-//moon.update();
-planet.update();
+//cout <<  df.sphere( mouse_transmission ,glm::vec3(0,0,0),2.0 )  << endl;
+//float n2 = noise3d();
+//cout << n2 << endl;
 }
+
+
+void ofApp::noise3d() {
+float n1;
+for(int i = 0; i < 100; ++i) {
+    //for(float j = 0; j < 10; ++j) {
+        //for(float k = 0; k < 10; ++k) {
+        
+        //n1 = noise.fb3(ofVec3f(ofGetElapsedTimeMillis()%100,ofGetElapsedTime()%50 ,ofGetElapsedTimeMillis()%25));
+        //n1 = ofRandom(0,1);
+        n1 = noise.fb3(ofVec3f( i+2,i+3,i+4));
+        //n1 = noise.fb3(ofVec3f(i,j,k));
+        test[i] = n1;
+        //test.push_back(n1);
+        //cout << n1 << endl;
+//}}}
+} 
+
+//return n1;
+}
+
+
+
+//star.update();
+//moon.update();
+//planet.update();
+//}

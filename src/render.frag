@@ -2,21 +2,27 @@
 
 uniform vec2 u_resolution; 
 uniform float u_time;
-//uniform float u_mouse;
-
+//uniform float u_time_since_start;
+uniform vec2 u_mouse;
 uniform vec3 u_cam_position;
-
-//uniform float u_random_hash;
+uniform float u_random_hash;
 uniform float u_random;
+uniform float u_noise;
+
+uniform int u_keypress_i;
+
+uniform float u_test[1000];
 
 const float PHI = 1.618033988749894; 
 const float PI = 3.1415926535;
 
-const float EPSILON = 0.001;
-const int RAYMARCH_STEPS = 32;
+const float EPSILON = 0.00001;
+const int RAYMARCH_STEPS = 64;
 const float TRACE_DISTANCE = 50.0;
 
-float phiHash(float h) {
+#define test_num 100
+
+float hashPHI(float h) {
 return fract(PHI * h);
 }
 
@@ -70,22 +76,25 @@ return value;
 }
 
 float noise3d(vec3 x,float r) {
+//float noise3d(vec3 x) {
 
 vec3 p = floor(x);
 vec3 f = fract(x);
 
-f = f * f * (3.0 - 2.0 * f); 
+f = f * f * (3.0 - 2.0 * f);
+ 
 float n = p.x + p.y * 157.0 + 113.0 * p.z + r;
 
 return mix(mix(mix(hash(n + 0.0),hash(n + 1.0),f.x), 
                mix(hash(n + 157.0),hash(n + 158.0),f.x),f.y),
            mix(mix(hash(n + 113.0),hash(n + 114.0),f.x),
                mix(hash(n + 270.0),hash(n + 271.0),f.x),f.y),f.z);
-} 
 
+} 
 
 #define FB3D_OCTAVES 4
 float fb3d(vec3 x,float r) {
+//float fb3d(vec3 x) {
 
 float value = 0.0;
 float amp = 0.5;
@@ -93,10 +102,23 @@ float amp = 0.5;
 for(int i = 0; i < FB3D_OCTAVES; ++i) {
 
 value += amp * noise3d(x,r);
+//value += amp * noise3d(x);
 x *= 2.0;
 amp *= 0.5;
 }
 return value;
+}
+
+float fb3d4(vec3 x) {
+
+float f = 0.0;
+
+//f = 0.5 * noise3d(x *2  ) ;
+//f += 0.25 * noise3d(x*4 );
+//f += 0.125 * noise3d(x*8 );
+//f += 0.0625 * noise3d(x*16 );
+
+return f;
 }
 
 //2d Shaping Functions
@@ -165,7 +187,19 @@ float s = sin(theta);
 return mat2(c,-s,s,c);
 }
 
-//Signed Distance Functions
+//3d Distance Fields
+
+float xSDF(vec3 p) {
+return p.x;
+}
+
+float ySDF(vec3 p) {
+return p.y;
+}
+
+float zSDF(vec3 p) {
+return p.z;
+}
 
 float sphereSDF(vec3 p,float r) { 
 return length(p) - r;
@@ -220,6 +254,47 @@ vec2 d = vec2(length(p.xy - vec2(clamp(p.x,-k.z * h.x,k.z * h.x),h.x)) * sign(p.
 return min(max(d.x,d.y),0.0) + length(max(d,0.0));
 }
 
+float opUf(float d1,float d2) {
+return min(d1,d2);
+}
+
+float opIf(float d1,float d2) {
+return max(d1,d2);
+}
+
+float opSf(float d1,float d2) {
+return max(-d1,d2);
+}
+
+float smoU(float d1,float d2,float k) {
+float h = clamp(0.5 + 0.5 * (d2-d1)/k,0.0,1.0);
+return mix(d2,d1,h) - k * h * (1.0 - h);
+}
+
+float smoS(float d1,float d2,float k) {
+float h = clamp(0.5 + 0.5 * (d2+d1)/k,0.0,1.0);
+return mix(d2,-d1,h) + k * h * (1.0 - h);
+}
+
+float smoI(float d1,float d2,float k) {
+float h = clamp(0.5 + 0.5 * (d1-d1)/k,0.0,1.0);
+return mix(d2,d1,h) + k * h * (1.0 - h);
+}
+
+//Entire scene can be rounded by increasing epsilon
+float rounding(float d,float h) { 
+return d - h;
+}
+
+float onion(float d,float h) {
+return abs(d) - h;
+}
+
+float repeat(float d,float domain) {
+return mod(d,domain) - domain/2.0;
+}
+
+//Scene union
 vec2 opU(in vec2 d1,in vec2 d2) {
 return d1.x < d2.x ? d1 : d2;
 }
@@ -230,15 +305,21 @@ vec2 map(in vec3 p) {
     
 vec2 res = vec2(1.0,0.0);
 
+mat4 rotate_mx = rotX(u_mouse.x);
+mat4 rotate_my = rotY(u_mouse.y);
+
+//p = (vec4(p,1.0) * rotate_mx * rotate_my).xyz;  
+
 //float n = sin3(p,5.0,.25);
 
-float n = fb3d( p  ,u_random) ;
+float n = fb3d( p ,u_random_hash) ;
+//float n = fb2d(vec2(p.x,p.y) );
 
-//vec3 rotating_point  = (rotY(u_time/100) * vec4(p,1.0)).xyz;
-//float n = fb3d(vec3(rotating_point),u_random);
-// p.xy *= rotate(u_time/100);
+//vec3 rotating_point  = (rotY(u_time) * vec4(p,1.0)).xyz;
+//float n = fb3d(vec3(rotating_point),u_random_hash);
 
-res = opU(res,vec2(sphereSDF(p - vec3(0.0,0.0,0.0)   ,2.0)+n,0.0));
+res = opU(res,vec2(sphereSDF(p - vec3(0.0,0.0,0.0)   ,2.0+n),0.0));
+
 //res = opU(res,vec2(boxSDF(p - vec3(0.0,0.0,0.0),vec3(1.0)),0.0));
 
 return res;
@@ -316,8 +397,6 @@ return color;
 
 mat3 rayDirection(in vec3 camera_position,in vec3 camera_target,in float r) {
 
-//vec3 rayCameraDirection(vec2 uv,vec3 cam_position,vec3 cam_target) {
-
 vec3 camera_forward = normalize(camera_target - camera_position);
 vec3 camera_up = vec3(sin(r),cos(r),0.0);
 vec3 u = normalize(cross(camera_forward,camera_up));
@@ -339,7 +418,7 @@ float d = rend.y;
 vec3 position =  ro + rd * distance;
 vec3 normal = calcNormal(position);
 
-vec3 light_position = vec3(-250.0);
+vec3 light_position = vec3(-1500.0);
 vec3 light_dir = normalize(light_position - position);
 
 vec3 ka = vec3(0.0);
@@ -363,14 +442,22 @@ return color;
 void main() {
 
 vec3 camera_position = vec3(u_cam_position);
+//vec3 camera_position = vec3(0.0,0.0,10.0);
+
 vec3 camera_target = vec3(0,0,0);
 
 vec2 uv = (gl_FragCoord.xy - 0.5 * u_resolution.x) / (min (u_resolution.x,u_resolution.y) );
 
 vec3 direction = rayDirection(camera_position,camera_target,0.0) * normalize(vec3(uv,1.0));
 
+//vec3 color;
+//if(u_keypress_i == 0) { 
 vec3 color = render(camera_position,direction);
-   
+//color = vec3(.5);
+//} else {
+// color = vec3(0.0);
+//}   
+
 gl_FragColor = vec4(color,1.0);
 
 }
